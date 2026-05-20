@@ -1,0 +1,55 @@
+{
+  "connector_status": {
+    "name": "SAP S/4HANA (SLT)",
+    "state": "healthy",
+    "last_sync_at": "2026-05-20T14:22:00Z",
+    "sync_frequency_min": 15,
+    "tables_replicated": 16
+  },
+  "layer_status": [
+    {
+      "layer": "bronze",
+      "state": "healthy",
+      "rows": 23837,
+      "last_run": "2026-05-20T14:22Z"
+    },
+    {
+      "layer": "silver",
+      "state": "healthy",
+      "rows": 12176,
+      "last_run": "2026-05-20T14:32Z"
+    },
+    {
+      "layer": "gold",
+      "state": "healthy",
+      "rows": 3748,
+      "last_run": "2026-05-20T14:38Z"
+    },
+    {
+      "layer": "publish",
+      "state": "healthy",
+      "rows": null,
+      "last_run": "2026-05-20T14:40Z"
+    }
+  ],
+  "failure_sim": [
+    {
+      "id": "odp_rfc_blocked",
+      "title": "ODP RFC blocking (July 2026)",
+      "narrative": "If Keystone had used ODP RFC, the source connector would have failed starting July 2026. Our SLT path is unaffected \u2014 this is the architecture decision the policy forced.",
+      "would_impact": false
+    },
+    {
+      "id": "sap_credentials_rotated",
+      "title": "SLT credentials rotated",
+      "narrative": "Fivetran retries with the new credential after Slab updates the secret.",
+      "would_impact": true
+    },
+    {
+      "id": "iceberg_schema_evolved",
+      "title": "Iceberg schema evolved",
+      "narrative": "Adding a column to KNA1 propagates through bronze \u2192 silver \u2192 gold without rewriting queries.",
+      "would_impact": false
+    }
+  ]
+}

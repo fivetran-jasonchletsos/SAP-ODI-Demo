@@ -1,0 +1,37 @@
+{
+  "today": "2026-05-20",
+  "last_sync_at": "2026-05-20T14:22:00Z",
+  "policy_excerpt": "SAP will begin blocking the ODP RFC interface in July 2026 and has introduced policy language that explicitly restricts AI agent access to SAP data via APIs. Keystone's pipeline runs Fivetran SLT, lands Iceberg into our own S3, and lets any engine \u2014 or any AI agent \u2014 query the gold layer directly. We are not on the policy clock.",
+  "kpis": [
+    {
+      "label": "Gross Revenue (TTM)",
+      "value": "$147.6M",
+      "sublabel": null
+    },
+    {
+      "label": "Procurement Spend",
+      "value": "$193.7M",
+      "sublabel": null
+    },
+    {
+      "label": "Sales Orders",
+      "value": "1,150",
+      "sublabel": null
+    },
+    {
+      "label": "Open PO Lines",
+      "value": "547",
+      "sublabel": null
+    },
+    {
+      "label": "SAP Tables Replicated",
+      "value": "16",
+      "sublabel": "FI \u00b7 SD \u00b7 MM \u00b7 Materials"
+    },
+    {
+      "label": "Extraction Path",
+      "value": "SLT",
+      "sublabel": "not ODP RFC (deprecating July 2026)"
+    }
+  ]
+}

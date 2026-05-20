@@ -1,0 +1,101 @@
+version: 2
+
+# dbt semantic layer for the Keystone SAP ODI demo.
+# Single source of truth for every metric surfaced in the frontend.
+# Defined once, consumed by /finance, /o2c, /p2p, /inventory, and /agent.
+
+metrics:
+  - name: gross_revenue
+    label: Gross Revenue
+    model: ref('fct_invoices')
+    description: Sum of net invoice line amounts.
+    calculation_method: sum
+    expression: invoice_amount
+    timestamp: billing_date
+    time_grains: [day, week, month, quarter, year]
+    dimensions: [customer_id, material_id, billing_type]
+
+  - name: open_ar_balance
+    label: Open Accounts Receivable
+    model: ref('fct_gl_journal')
+    description: Net signed posting amount on asset-class GL accounts tied to a customer.
+    calculation_method: sum
+    expression: signed_local_amount
+    timestamp: posting_date
+    time_grains: [month, quarter, year]
+    dimensions: [company_code, customer_id]
+    filters:
+      - field: account_class
+        operator: '='
+        value: "'asset'"
+
+  - name: open_ap_balance
+    label: Open Accounts Payable
+    model: ref('fct_gl_journal')
+    description: Net signed posting amount on liability-class GL accounts tied to a vendor.
+    calculation_method: sum
+    expression: signed_local_amount
+    timestamp: posting_date
+    time_grains: [month, quarter, year]
+    dimensions: [company_code, vendor_id]
+    filters:
+      - field: account_class
+        operator: '='
+        value: "'liability'"
+
+  - name: dso_days
+    label: Days Sales Outstanding
+    model: ref('mart_dso')
+    calculation_method: average
+    expression: dso_days
+    timestamp: period_month
+    time_grains: [month, quarter]
+    dimensions: [customer_id]
+
+  - name: dpo_days
+    label: Days Payable Outstanding
+    model: ref('mart_dpo')
+    calculation_method: average
+    expression: dpo_days
+    timestamp: period_month
+    time_grains: [month, quarter]
+    dimensions: [vendor_id]
+
+  - name: inventory_turns
+    label: Inventory Turns (TTM)
+    model: ref('mart_inventory_turns')
+    calculation_method: average
+    expression: turns
+    dimensions: [material_id, plant_id, material_group]
+
+  - name: o2c_cycle_days
+    label: Order-to-Cash Cycle (days)
+    model: ref('mart_order_to_cash')
+    calculation_method: average
+    expression: days_to_first_bill
+    timestamp: created_date
+    time_grains: [month, quarter]
+    dimensions: [customer_id, o2c_band]
+
+  - name: three_way_match_pct
+    label: Three-Way Match Completion %
+    model: ref('mart_supplier_scorecard')
+    calculation_method: average
+    expression: three_way_match_pct
+    dimensions: [vendor_id, region_bucket]
+
+  - name: inventory_value
+    label: Inventory Value at Standard
+    model: ref('fct_inventory_position')
+    calculation_method: sum
+    expression: inventory_value
+    dimensions: [plant_id, material_group]
+
+  - name: cash_conversion_cycle
+    label: Cash Conversion Cycle (days)
+    description: |
+      Derived: DSO + DIO - DPO. Computed in /agent at query time from the
+      three component metrics above. Defined here for discoverability.
+    model: ref('mart_dso')
+    calculation_method: average
+    expression: dso_days

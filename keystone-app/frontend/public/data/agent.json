@@ -1,0 +1,15 @@
+{
+  "sample_questions": [
+    "Which customers have the worst DSO this quarter?",
+    "Which vendors are below 90% three-way-match?",
+    "Show me the top 10 slow-moving materials by inventory value.",
+    "What does the trial balance look like for KS01 in Q1?",
+    "Which sales orders have been open more than 60 days?"
+  ],
+  "policy_callouts": [
+    "This agent never calls an SAP API.",
+    "It queries the Iceberg gold layer directly via the Glue catalog.",
+    "The same query path works against DuckDB on a laptop, Athena in production, or Spark in batch.",
+    "No ODP RFC. No SAP-controlled gateway. No exposure to the July 2026 deadline."
+  ]
+}

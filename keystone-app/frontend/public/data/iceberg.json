@@ -1,0 +1,269 @@
+{
+  "tables": [
+    {
+      "schema": "bronze_sap_fi",
+      "table": "bkpf",
+      "row_count": 3748,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    },
+    {
+      "schema": "bronze_sap_fi",
+      "table": "bseg",
+      "row_count": 7496,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    },
+    {
+      "schema": "bronze_sap_fi",
+      "table": "skat",
+      "row_count": 248,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    },
+    {
+      "schema": "bronze_sap_fi",
+      "table": "skb1",
+      "row_count": 412,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    },
+    {
+      "schema": "bronze_sap_sd",
+      "table": "vbak",
+      "row_count": 1150,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    },
+    {
+      "schema": "bronze_sap_sd",
+      "table": "vbap",
+      "row_count": 2890,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    },
+    {
+      "schema": "bronze_sap_sd",
+      "table": "vbrk",
+      "row_count": 2236,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    },
+    {
+      "schema": "bronze_sap_sd",
+      "table": "vbrp",
+      "row_count": 2236,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    },
+    {
+      "schema": "bronze_sap_sd",
+      "table": "kna1",
+      "row_count": 26,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    },
+    {
+      "schema": "bronze_sap_mm",
+      "table": "ekko",
+      "row_count": 719,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    },
+    {
+      "schema": "bronze_sap_mm",
+      "table": "ekpo",
+      "row_count": 1790,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    },
+    {
+      "schema": "bronze_sap_mm",
+      "table": "rseg",
+      "row_count": 1512,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    },
+    {
+      "schema": "bronze_sap_mm",
+      "table": "lfa1",
+      "row_count": 20,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    },
+    {
+      "schema": "bronze_sap_mat",
+      "table": "mara",
+      "row_count": 60,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    },
+    {
+      "schema": "bronze_sap_mat",
+      "table": "marc",
+      "row_count": 60,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    },
+    {
+      "schema": "bronze_sap_mat",
+      "table": "mbew",
+      "row_count": 60,
+      "format": "Apache Iceberg",
+      "storage": "s3://keystone-odi-lake/",
+      "catalog": "AWS Glue"
+    }
+  ],
+  "engines": [
+    {
+      "name": "AWS Athena",
+      "use_case": "ad-hoc SQL, BI",
+      "sample_sql": "SELECT customer_id, SUM(invoice_amount)\nFROM gold.fct_invoices\nGROUP BY 1\nORDER BY 2 DESC LIMIT 10;"
+    },
+    {
+      "name": "DuckDB",
+      "use_case": "laptop-local analytics",
+      "sample_sql": "INSTALL iceberg; LOAD iceberg;\nSELECT * FROM iceberg_scan('s3://keystone-odi-lake/gold/fct_invoices');"
+    },
+    {
+      "name": "Trino",
+      "use_case": "federated multi-source",
+      "sample_sql": "SELECT * FROM iceberg.gold.fct_gl_journal\nWHERE posting_year = 2026;"
+    },
+    {
+      "name": "Apache Spark",
+      "use_case": "ML feature engineering",
+      "sample_sql": "spark.read.format('iceberg').load('gold.fct_invoices').groupBy('customer_id').sum('invoice_amount')"
+    },
+    {
+      "name": "Claude (LLM)",
+      "use_case": "agentic Q&A \u2014 no SAP RFC",
+      "sample_sql": "Agent queries the parquet directly via the Iceberg catalog.\nNo SAP API call. No analytical SKU. No policy violation."
+    }
+  ],
+  "lineage": {
+    "nodes": [
+      {
+        "id": "sap",
+        "label": "SAP S/4HANA",
+        "group": "source"
+      },
+      {
+        "id": "ft",
+        "label": "Fivetran SLT",
+        "group": "ingest"
+      },
+      {
+        "id": "bronze",
+        "label": "Bronze (Iceberg)",
+        "group": "lake"
+      },
+      {
+        "id": "silver",
+        "label": "Silver (dbt)",
+        "group": "transform"
+      },
+      {
+        "id": "gold",
+        "label": "Gold (dbt)",
+        "group": "transform"
+      },
+      {
+        "id": "athena",
+        "label": "Athena",
+        "group": "engine"
+      },
+      {
+        "id": "duckdb",
+        "label": "DuckDB",
+        "group": "engine"
+      },
+      {
+        "id": "spark",
+        "label": "Spark",
+        "group": "engine"
+      },
+      {
+        "id": "agent",
+        "label": "Claude agent",
+        "group": "engine"
+      }
+    ],
+    "edges": [
+      {
+        "from": "sap",
+        "to": "ft"
+      },
+      {
+        "from": "ft",
+        "to": "bronze"
+      },
+      {
+        "from": "bronze",
+        "to": "silver"
+      },
+      {
+        "from": "silver",
+        "to": "gold"
+      },
+      {
+        "from": "gold",
+        "to": "athena"
+      },
+      {
+        "from": "gold",
+        "to": "duckdb"
+      },
+      {
+        "from": "gold",
+        "to": "spark"
+      },
+      {
+        "from": "gold",
+        "to": "agent"
+      }
+    ]
+  },
+  "mds_vs_odi": [
+    {
+      "dimension": "Storage",
+      "sap_bw": "SAP-managed columnstore",
+      "odi": "Open Iceberg in your S3"
+    },
+    {
+      "dimension": "Compute",
+      "sap_bw": "SAP HANA / Datasphere only",
+      "odi": "Athena, DuckDB, Trino, Spark, anything"
+    },
+    {
+      "dimension": "AI access",
+      "sap_bw": "Via SAP-controlled pathways",
+      "odi": "Direct parquet read; no RFC"
+    },
+    {
+      "dimension": "Migration cost",
+      "sap_bw": "Full rebuild",
+      "odi": "Portable dbt SQL"
+    },
+    {
+      "dimension": "Vendor lock-in",
+      "sap_bw": "End-to-end",
+      "odi": "None"
+    }
+  ]
+}

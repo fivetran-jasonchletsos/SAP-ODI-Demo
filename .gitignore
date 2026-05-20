@@ -1,0 +1,28 @@
+# python
+__pycache__/
+*.pyc
+.venv/
+.python-version
+
+# node
+node_modules/
+keystone-app/frontend/dist/
+keystone-app/frontend/.vite/
+
+# dbt
+transform/target/
+transform/dbt_packages/
+transform/logs/
+transform/profiles.yml
+
+# terraform
+infra/.terraform/
+infra/.terraform.lock.hcl
+infra/terraform.tfstate
+infra/terraform.tfstate.backup
+infra/terraform.tfvars
+
+# editors
+.vscode/
+.idea/
+.DS_Store

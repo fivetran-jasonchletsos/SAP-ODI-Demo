@@ -1,0 +1,5 @@
+aws_region            = "us-east-1"
+suffix                = ""                                  # or "ks1234" to pin
+fivetran_external_id  = "PASTE_FROM_FIVETRAN_SAP_DESTINATION"
+dbt_iam_user_arn      = "arn:aws:iam::123456789012:user/dbt-runner"
+github_pages_origin   = "https://fivetran-jasonchletsos.github.io"

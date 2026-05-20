@@ -1,0 +1,281 @@
+version: 2
+
+sources:
+  - name: bronze_sap_fi
+    description: |
+      Raw SAP FI (Financial Accounting) tables landed as Iceberg in S3
+      by Fivetran's SAP connector via SLT. NOT via ODP RFC (which SAP
+      begins blocking July 2026).
+    database: awsdatacatalog
+    schema: bronze_sap_fi
+    loader: fivetran_sap_slt
+    tables:
+      - name: bkpf
+        description: Accounting Document Header. One row per accounting document.
+        columns:
+          - name: bukrs
+            description: Company Code (SAP cryptic name → company_code in silver)
+            data_tests: [not_null]
+          - name: belnr
+            description: Accounting Document Number
+            data_tests: [not_null]
+          - name: gjahr
+            description: Fiscal Year
+          - name: blart
+            description: Document Type (SA, KR, DR, etc.)
+          - name: bldat
+            description: Document Date
+          - name: budat
+            description: Posting Date
+          - name: waers
+            description: Currency Key
+          - name: usnam
+            description: User Name who posted
+          - name: _fivetran_synced
+          - name: _fivetran_deleted
+
+      - name: bseg
+        description: Accounting Document Segment (line items).
+        columns:
+          - name: bukrs
+          - name: belnr
+            data_tests: [not_null]
+          - name: gjahr
+          - name: buzei
+            description: Line item number
+          - name: hkont
+            description: GL account
+          - name: dmbtr
+            description: Amount in local currency
+          - name: wrbtr
+            description: Amount in document currency
+          - name: shkzg
+            description: Debit/Credit indicator (S/H)
+          - name: kunnr
+            description: Customer (if AR posting)
+          - name: lifnr
+            description: Vendor (if AP posting)
+          - name: matnr
+            description: Material (if relevant)
+          - name: _fivetran_synced
+          - name: _fivetran_deleted
+
+      - name: skat
+        description: GL Account Text (multi-language).
+        columns:
+          - name: spras
+            description: Language key
+          - name: ktopl
+            description: Chart of accounts
+          - name: saknr
+            description: GL account
+          - name: txt50
+            description: Description (50 chars)
+          - name: _fivetran_synced
+
+      - name: skb1
+        description: GL Account Master (company-code specific).
+        columns:
+          - name: bukrs
+          - name: saknr
+          - name: mwskz
+            description: Tax code
+          - name: xopvw
+            description: Open item management flag
+          - name: _fivetran_synced
+
+  - name: bronze_sap_sd
+    description: Sales & Distribution tables (SLT path).
+    database: awsdatacatalog
+    schema: bronze_sap_sd
+    loader: fivetran_sap_slt
+    tables:
+      - name: vbak
+        description: Sales Document Header.
+        columns:
+          - name: vbeln
+            description: Sales Document Number
+            data_tests: [not_null]
+          - name: erdat
+            description: Created on
+          - name: auart
+            description: Sales doc type
+          - name: kunnr
+            description: Sold-to customer
+          - name: vkorg
+            description: Sales organization
+          - name: netwr
+            description: Net value of doc
+          - name: waerk
+            description: Doc currency
+          - name: _fivetran_synced
+          - name: _fivetran_deleted
+      - name: vbap
+        description: Sales Document Item.
+        columns:
+          - name: vbeln
+            data_tests: [not_null]
+          - name: posnr
+            description: Line item number
+          - name: matnr
+          - name: kwmeng
+            description: Order quantity
+          - name: vrkme
+            description: Sales unit
+          - name: netwr
+            description: Net value of line
+          - name: werks
+            description: Plant
+          - name: _fivetran_synced
+          - name: _fivetran_deleted
+      - name: vbrk
+        description: Billing Document Header.
+        columns:
+          - name: vbeln
+            description: Billing doc number
+            data_tests: [not_null]
+          - name: fkart
+            description: Billing type
+          - name: fkdat
+            description: Billing date
+          - name: kunrg
+            description: Payer
+          - name: netwr
+          - name: waerk
+          - name: _fivetran_synced
+          - name: _fivetran_deleted
+      - name: vbrp
+        description: Billing Document Item.
+        columns:
+          - name: vbeln
+            data_tests: [not_null]
+          - name: posnr
+          - name: matnr
+          - name: fkimg
+            description: Billed quantity
+          - name: netwr
+          - name: aubel
+            description: Originating sales order
+          - name: _fivetran_synced
+          - name: _fivetran_deleted
+      - name: kna1
+        description: Customer Master (general).
+        columns:
+          - name: kunnr
+            data_tests: [not_null, unique]
+          - name: name1
+            description: Customer name
+          - name: land1
+            description: Country
+          - name: ort01
+            description: City
+          - name: regio
+            description: Region/state
+          - name: _fivetran_synced
+
+  - name: bronze_sap_mm
+    description: Materials Management tables (SLT path).
+    database: awsdatacatalog
+    schema: bronze_sap_mm
+    loader: fivetran_sap_slt
+    tables:
+      - name: ekko
+        description: Purchasing Document Header.
+        columns:
+          - name: ebeln
+            description: PO number
+            data_tests: [not_null]
+          - name: bukrs
+          - name: bedat
+            description: PO date
+          - name: lifnr
+            description: Vendor
+          - name: waers
+          - name: _fivetran_synced
+          - name: _fivetran_deleted
+      - name: ekpo
+        description: Purchasing Document Item.
+        columns:
+          - name: ebeln
+            data_tests: [not_null]
+          - name: ebelp
+            description: PO line number
+          - name: matnr
+          - name: menge
+            description: PO quantity
+          - name: meins
+            description: PO UOM
+          - name: netpr
+            description: Net price
+          - name: werks
+            description: Plant
+          - name: _fivetran_synced
+          - name: _fivetran_deleted
+      - name: rseg
+        description: Supplier Invoice Item (verified invoice).
+        columns:
+          - name: belnr
+            description: Invoice doc number
+            data_tests: [not_null]
+          - name: gjahr
+          - name: buzei
+          - name: ebeln
+            description: Referenced PO
+          - name: ebelp
+          - name: matnr
+          - name: menge
+          - name: wrbtr
+          - name: _fivetran_synced
+          - name: _fivetran_deleted
+      - name: lfa1
+        description: Vendor Master (general).
+        columns:
+          - name: lifnr
+            data_tests: [not_null, unique]
+          - name: name1
+          - name: land1
+          - name: ort01
+          - name: _fivetran_synced
+
+  - name: bronze_sap_mat
+    description: Material master tables (SLT path).
+    database: awsdatacatalog
+    schema: bronze_sap_mat
+    loader: fivetran_sap_slt
+    tables:
+      - name: mara
+        description: Material Master (general).
+        columns:
+          - name: matnr
+            data_tests: [not_null, unique]
+          - name: mtart
+            description: Material type
+          - name: matkl
+            description: Material group
+          - name: meins
+            description: Base UOM
+          - name: _fivetran_synced
+      - name: marc
+        description: Material Plant View.
+        columns:
+          - name: matnr
+            data_tests: [not_null]
+          - name: werks
+            data_tests: [not_null]
+          - name: dispo
+            description: MRP controller
+          - name: ekgrp
+            description: Purchasing group
+          - name: _fivetran_synced
+      - name: mbew
+        description: Material Valuation.
+        columns:
+          - name: matnr
+          - name: bwkey
+            description: Valuation area (=plant typically)
+          - name: stprs
+            description: Standard price
+          - name: peinh
+            description: Price unit
+          - name: waers
+          - name: _fivetran_synced

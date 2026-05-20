@@ -1,0 +1,30 @@
+[
+  {
+    "risk": "Cost stacking",
+    "claim": "Multiple SAP data products compound expenses when external compute joins the architecture.",
+    "answer": "Single Iceberg copy. Athena, DuckDB, Trino, Spark \u2014 every engine reads the same bytes.",
+    "link": "/architecture#engines",
+    "link_label": "Five engines, one storage copy"
+  },
+  {
+    "risk": "Cloud inflexibility",
+    "claim": "Restricted to vendor-certified services rather than the full native cloud catalog.",
+    "answer": "Native S3 + Glue + Athena. Terraform under infra/ provisions exactly the AWS primitives Keystone already runs.",
+    "link": "/architecture#infra",
+    "link_label": "Open Iceberg in your own S3"
+  },
+  {
+    "risk": "Architectural lock-in",
+    "claim": "Business logic and security models stay vendor-dependent; migrations are full rebuilds.",
+    "answer": "Marts live as portable dbt SQL. Swap Athena for Snowflake or BigQuery without rewriting the business logic.",
+    "link": "/finance",
+    "link_label": "Marts are portable dbt SQL"
+  },
+  {
+    "risk": "AI dependency",
+    "claim": "AI agent access to your own data is limited to vendor-defined pathways.",
+    "answer": "Claude queries the lake directly. No SAP RFC. No SAP-licensed analytical compute. No policy violation.",
+    "link": "/agent",
+    "link_label": "Claude queries the lake directly"
+  }
+]
