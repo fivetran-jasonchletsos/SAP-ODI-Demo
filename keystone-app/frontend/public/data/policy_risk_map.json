@@ -3,14 +3,14 @@
     "risk": "Cost stacking",
     "claim": "Multiple SAP data products compound expenses when external compute joins the architecture.",
     "answer": "Single Iceberg copy. Athena, DuckDB, Trino, Spark \u2014 every engine reads the same bytes.",
-    "link": "/architecture#engines",
+    "link": "/architecture",
     "link_label": "Five engines, one storage copy"
   },
   {
     "risk": "Cloud inflexibility",
     "claim": "Restricted to vendor-certified services rather than the full native cloud catalog.",
     "answer": "Native S3 + Glue + Athena. Terraform under infra/ provisions exactly the AWS primitives Keystone already runs.",
-    "link": "/architecture#infra",
+    "link": "/architecture",
     "link_label": "Open Iceberg in your own S3"
   },
   {
