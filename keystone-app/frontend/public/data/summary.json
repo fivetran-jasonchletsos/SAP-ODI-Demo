@@ -5,22 +5,22 @@
   "kpis": [
     {
       "label": "Gross Revenue (TTM)",
-      "value": "$147.6M",
+      "value": "$159.9M",
       "sublabel": null
     },
     {
       "label": "Procurement Spend",
-      "value": "$193.7M",
+      "value": "$233.6M",
       "sublabel": null
     },
     {
       "label": "Sales Orders",
-      "value": "1,150",
+      "value": "1,212",
       "sublabel": null
     },
     {
       "label": "Open PO Lines",
-      "value": "547",
+      "value": "644",
       "sublabel": null
     },
     {

@@ -3,7 +3,7 @@
     {
       "schema": "bronze_sap_fi",
       "table": "bkpf",
-      "row_count": 3748,
+      "row_count": 6097,
       "format": "Apache Iceberg",
       "storage": "s3://keystone-odi-lake/",
       "catalog": "AWS Glue"
@@ -11,7 +11,7 @@
     {
       "schema": "bronze_sap_fi",
       "table": "bseg",
-      "row_count": 7496,
+      "row_count": 12194,
       "format": "Apache Iceberg",
       "storage": "s3://keystone-odi-lake/",
       "catalog": "AWS Glue"
@@ -35,7 +35,7 @@
     {
       "schema": "bronze_sap_sd",
       "table": "vbak",
-      "row_count": 1150,
+      "row_count": 1212,
       "format": "Apache Iceberg",
       "storage": "s3://keystone-odi-lake/",
       "catalog": "AWS Glue"
@@ -43,7 +43,7 @@
     {
       "schema": "bronze_sap_sd",
       "table": "vbap",
-      "row_count": 2890,
+      "row_count": 3056,
       "format": "Apache Iceberg",
       "storage": "s3://keystone-odi-lake/",
       "catalog": "AWS Glue"
@@ -51,7 +51,7 @@
     {
       "schema": "bronze_sap_sd",
       "table": "vbrk",
-      "row_count": 2236,
+      "row_count": 2380,
       "format": "Apache Iceberg",
       "storage": "s3://keystone-odi-lake/",
       "catalog": "AWS Glue"
@@ -59,7 +59,7 @@
     {
       "schema": "bronze_sap_sd",
       "table": "vbrp",
-      "row_count": 2236,
+      "row_count": 2380,
       "format": "Apache Iceberg",
       "storage": "s3://keystone-odi-lake/",
       "catalog": "AWS Glue"
@@ -75,7 +75,7 @@
     {
       "schema": "bronze_sap_mm",
       "table": "ekko",
-      "row_count": 719,
+      "row_count": 817,
       "format": "Apache Iceberg",
       "storage": "s3://keystone-odi-lake/",
       "catalog": "AWS Glue"
@@ -83,7 +83,7 @@
     {
       "schema": "bronze_sap_mm",
       "table": "ekpo",
-      "row_count": 1790,
+      "row_count": 2096,
       "format": "Apache Iceberg",
       "storage": "s3://keystone-odi-lake/",
       "catalog": "AWS Glue"
@@ -91,7 +91,7 @@
     {
       "schema": "bronze_sap_mm",
       "table": "rseg",
-      "row_count": 1512,
+      "row_count": 1779,
       "format": "Apache Iceberg",
       "storage": "s3://keystone-odi-lake/",
       "catalog": "AWS Glue"

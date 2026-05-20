@@ -1,0 +1,103 @@
+version: 2
+
+# Silver layer schema + tests.
+# Reis & Housley (Fundamentals of Data Engineering) treat data quality as
+# a cross-cutting undercurrent; every model lands with a contract that
+# downstream consumers can rely on. Tests run on every dbt build.
+
+models:
+  - name: stg_sap__bkpf
+    description: Accounting document header — one row per (company_code, document_number, fiscal_year).
+    columns:
+      - name: company_code
+        data_tests: [not_null]
+      - name: document_number
+        data_tests: [not_null]
+      - name: fiscal_year
+        data_tests: [not_null]
+      - name: posting_date
+        data_tests: [not_null]
+      - name: currency
+        data_tests: [not_null]
+
+  - name: stg_sap__bseg
+    description: Accounting document line items — one row per (document_number, line_item).
+    columns:
+      - name: company_code
+        data_tests: [not_null]
+      - name: document_number
+        data_tests: [not_null]
+      - name: line_item
+        data_tests: [not_null]
+      - name: gl_account
+        data_tests: [not_null]
+      - name: signed_local_amount
+        description: Local amount with sign reversed for credit postings, so summing returns the net.
+
+  - name: stg_sap__kna1
+    columns:
+      - name: customer_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: stg_sap__lfa1
+    columns:
+      - name: vendor_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: stg_sap__mara
+    columns:
+      - name: material_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: stg_sap__vbak
+    columns:
+      - name: sales_doc_id
+        data_tests:
+          - not_null
+          - unique
+      - name: customer_id
+        data_tests: [not_null]
+
+  - name: stg_sap__vbap
+    columns:
+      - name: sales_doc_id
+        data_tests: [not_null]
+      - name: line_item
+        data_tests: [not_null]
+
+  - name: stg_sap__ekko
+    columns:
+      - name: purchase_order_id
+        data_tests:
+          - not_null
+          - unique
+      - name: vendor_id
+        data_tests: [not_null]
+
+  - name: stg_sap__ekpo
+    columns:
+      - name: purchase_order_id
+        data_tests: [not_null]
+      - name: line_item
+        data_tests: [not_null]
+
+  - name: int_gl_journal
+    description: Header+item join — one row per posting line, with sign-corrected amounts.
+    columns:
+      - name: document_number
+        data_tests: [not_null]
+      - name: posting_date
+        data_tests: [not_null]
+      - name: gl_account
+        data_tests: [not_null]
+      - name: signed_local_amount
+        description: |
+          Sign convention: positive = debit, negative = credit. Summing this column
+          over any subset yields the net balance — that is the contract every
+          downstream gold model relies on.

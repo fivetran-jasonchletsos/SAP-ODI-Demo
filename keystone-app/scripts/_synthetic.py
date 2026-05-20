@@ -104,6 +104,10 @@ def generate() -> dict[str, Any]:
             "customer_name": name,
             "country":       country,
             "region_bucket": region_bucket,
+            # Payment behavior: 1.0 = pays on terms (30d). >1.0 = slow.
+            # 7% are chronic non-payers.
+            "payment_lag_multiplier": round(rng.uniform(0.5, 1.5), 2),
+            "non_payer":              rng.random() < 0.03,
         })
 
     vendors = []
@@ -177,6 +181,17 @@ def generate() -> dict[str, Any]:
                     "days_to_first_bill": days_to_bill,
                 })
                 if billed:
+                    # Payment date: 30-day base terms × customer behavior, with noise.
+                    # Non-payers and not-yet-due invoices leave invoice in open AR.
+                    base_terms_days = 30
+                    if customer["non_payer"]:
+                        payment_date = None
+                    else:
+                        lag = max(5, int(base_terms_days
+                                         * customer["payment_lag_multiplier"]
+                                         * rng.uniform(0.8, 1.3)))
+                        pd = bill_date + timedelta(days=lag)
+                        payment_date = pd if pd <= today else None
                     invoices.append({
                         "billing_doc_id":     _doc_num("BI", len(invoices) + 1),
                         "line_item":          line,
@@ -190,6 +205,7 @@ def generate() -> dict[str, Any]:
                         "invoice_amount":     value,
                         "source_sales_doc_id": so_id,
                         "currency":           "USD",
+                        "payment_date":       payment_date.isoformat() if payment_date else None,
                     })
 
     # ---- purchase orders + supplier invoices ----
@@ -255,6 +271,7 @@ def generate() -> dict[str, Any]:
     gl_seq = 0
     for inv in invoices:
         gl_seq += 1
+        # AR debit on billing date
         gl_rows.append({
             "document_number":    _doc_num("GL", gl_seq),
             "company_code":       "KS01",
@@ -269,6 +286,7 @@ def generate() -> dict[str, Any]:
             "vendor_id":          None,
             "currency":           "USD",
         })
+        # Revenue credit on billing date
         gl_rows.append({
             "document_number":    _doc_num("GL", gl_seq),
             "company_code":       "KS01",
@@ -283,6 +301,39 @@ def generate() -> dict[str, Any]:
             "vendor_id":          None,
             "currency":           "USD",
         })
+        # Cash receipt closes the AR on payment_date
+        if inv["payment_date"]:
+            gl_seq += 1
+            pay_year  = int(inv["payment_date"][:4])
+            pay_month = int(inv["payment_date"][5:7])
+            gl_rows.append({
+                "document_number":    _doc_num("GL", gl_seq),
+                "company_code":       "KS01",
+                "posting_date":       inv["payment_date"],
+                "posting_year":       pay_year,
+                "posting_month":      pay_month,
+                "gl_account":         "100000",
+                "gl_account_description": "Cash and cash equivalents",
+                "account_class":      "asset",
+                "signed_local_amount": inv["invoice_amount"],
+                "customer_id":        None,
+                "vendor_id":          None,
+                "currency":           "USD",
+            })
+            gl_rows.append({
+                "document_number":    _doc_num("GL", gl_seq),
+                "company_code":       "KS01",
+                "posting_date":       inv["payment_date"],
+                "posting_year":       pay_year,
+                "posting_month":      pay_month,
+                "gl_account":         "120100",
+                "gl_account_description": "Trade receivables - third party",
+                "account_class":      "asset",
+                "signed_local_amount": -inv["invoice_amount"],
+                "customer_id":        inv["customer_id"],
+                "vendor_id":          None,
+                "currency":           "USD",
+            })
 
     for si in supplier_invoices:
         gl_seq += 1
@@ -397,24 +448,49 @@ def shape_finance(d: dict[str, Any]) -> dict[str, Any]:
             slot["credit_total"] += -amt
         slot["net_balance"] += amt
 
-    # DSO trend by month
-    by_month: dict[str, dict[str, float]] = {}
-    for inv in d["invoices"]:
-        key = f"{inv['billing_year']}-{inv['billing_month']:02d}"
-        by_month.setdefault(key, {"revenue": 0.0, "ar": 0.0})
-        by_month[key]["revenue"] += inv["invoice_amount"]
-    for gl in d["gl_journal"]:
-        if gl["account_class"] == "asset" and gl["customer_id"]:
-            key = f"{gl['posting_year']}-{gl['posting_month']:02d}"
-            by_month.setdefault(key, {"revenue": 0.0, "ar": 0.0})
-            by_month[key]["ar"] += gl["signed_local_amount"]
+    # DSO trend by month — outstanding-balance method.
+    # Revenue_m = invoices billed within month m.
+    # AR at end of month m = sum of invoices billed on/before m_end AND not yet paid by m_end.
+    # DSO = AR_end / Revenue_m * 30.
+    from datetime import date as _date
+
+    invoices_dl = d["invoices"]
+    # Collect every (year, month) that has activity
+    months: set[tuple[int, int]] = set()
+    for inv in invoices_dl:
+        months.add((inv["billing_year"], inv["billing_month"]))
+    sorted_months = sorted(months)
+
+    def _month_end(y: int, m: int) -> _date:
+        if m == 12:
+            return _date(y, 12, 31)
+        return _date(y, m + 1, 1) - timedelta(days=1)
+
+    cur = datetime.fromisoformat(d["today"])
+    cur_ym = (cur.year, cur.month)
     dso_trend = []
-    for k in sorted(by_month):
-        rev = by_month[k]["revenue"]
-        ar  = by_month[k]["ar"]
-        dso = (ar / rev) * 30.0 if rev else None
-        dso_trend.append({"period": k, "revenue": round(rev, 2), "ar": round(ar, 2),
-                          "dso_days": round(dso, 1) if dso else None})
+    for (y, m) in sorted_months:
+        if (y, m) > cur_ym:        # don't project future months
+            continue
+        month_end = _month_end(y, m)
+        revenue = sum(inv["invoice_amount"] for inv in invoices_dl
+                      if inv["billing_year"] == y and inv["billing_month"] == m)
+        ar_outstanding = 0.0
+        for inv in invoices_dl:
+            bill_d = _date.fromisoformat(inv["billing_date"])
+            if bill_d > month_end:
+                continue
+            pay_s = inv.get("payment_date")
+            paid_by_month_end = pay_s is not None and _date.fromisoformat(pay_s) <= month_end
+            if not paid_by_month_end:
+                ar_outstanding += inv["invoice_amount"]
+        dso = (ar_outstanding / revenue) * 30.0 if revenue else None
+        dso_trend.append({
+            "period": f"{y}-{m:02d}",
+            "revenue": round(revenue, 2),
+            "ar": round(ar_outstanding, 2),
+            "dso_days": round(dso, 1) if dso is not None else None,
+        })
 
     # close progress curve (current month)
     cur = datetime.fromisoformat(d["today"])

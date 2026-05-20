@@ -1,733 +1,717 @@
 {
   "trial_balance": [
     {
+      "gl_account": "100000",
+      "gl_account_description": "Cash and cash equivalents",
+      "account_class": "asset",
+      "debit_total": 130631633.79999997,
+      "credit_total": 0.0,
+      "net_balance": 130631633.79999997
+    },
+    {
       "gl_account": "120100",
       "gl_account_description": "Trade receivables - third party",
       "account_class": "asset",
-      "debit_total": 147567708.60999998,
-      "credit_total": 0.0,
-      "net_balance": 147567708.60999998
+      "debit_total": 159929331.07000002,
+      "credit_total": 130631633.79999997,
+      "net_balance": 29297697.269999977
     },
     {
       "gl_account": "210100",
       "gl_account_description": "Trade payables - third party",
       "account_class": "liability",
       "debit_total": 0.0,
-      "credit_total": 193714227.3200001,
-      "net_balance": -193714227.3200001
+      "credit_total": 233579720.4499997,
+      "net_balance": -233579720.4499997
     },
     {
       "gl_account": "400000",
       "gl_account_description": "Revenue - finished goods",
       "account_class": "revenue",
       "debit_total": 0.0,
-      "credit_total": 147567708.60999998,
-      "net_balance": -147567708.60999998
+      "credit_total": 159929331.07000002,
+      "net_balance": -159929331.07000002
     },
     {
       "gl_account": "510000",
       "gl_account_description": "COGS - raw materials",
       "account_class": "expense",
-      "debit_total": 193714227.3200001,
+      "debit_total": 233579720.4499997,
       "credit_total": 0.0,
-      "net_balance": 193714227.3200001
+      "net_balance": 233579720.4499997
     }
   ],
   "dso_trend": [
     {
       "period": "2024-08",
-      "revenue": 598545.53,
-      "ar": 598545.53,
+      "revenue": 909281.84,
+      "ar": 909281.84,
       "dso_days": 30.0
     },
     {
       "period": "2024-09",
-      "revenue": 3888512.94,
-      "ar": 3888512.94,
-      "dso_days": 30.0
+      "revenue": 5154722.21,
+      "ar": 4718631.15,
+      "dso_days": 27.5
     },
     {
       "period": "2024-10",
-      "revenue": 5723738.51,
-      "ar": 5723738.51,
-      "dso_days": 30.0
+      "revenue": 6793798.52,
+      "ar": 5455657.8,
+      "dso_days": 24.1
     },
     {
       "period": "2024-11",
-      "revenue": 3744917.69,
-      "ar": 3744917.69,
-      "dso_days": 30.0
+      "revenue": 8597051.2,
+      "ar": 7542844.24,
+      "dso_days": 26.3
     },
     {
       "period": "2024-12",
-      "revenue": 5573979.36,
-      "ar": 5573979.36,
-      "dso_days": 30.0
+      "revenue": 6969215.96,
+      "ar": 6868060.74,
+      "dso_days": 29.6
     },
     {
       "period": "2025-01",
-      "revenue": 3863416.98,
-      "ar": 3863416.98,
-      "dso_days": 30.0
+      "revenue": 8820745.2,
+      "ar": 7964774.24,
+      "dso_days": 27.1
     },
     {
       "period": "2025-02",
-      "revenue": 4544223.47,
-      "ar": 4544223.47,
-      "dso_days": 30.0
+      "revenue": 7489709.42,
+      "ar": 7408329.88,
+      "dso_days": 29.7
     },
     {
       "period": "2025-03",
-      "revenue": 6057984.86,
-      "ar": 6057984.86,
-      "dso_days": 30.0
+      "revenue": 6439156.26,
+      "ar": 7834992.29,
+      "dso_days": 36.5
     },
     {
       "period": "2025-04",
-      "revenue": 5953664.57,
-      "ar": 5953664.57,
-      "dso_days": 30.0
+      "revenue": 4647929.21,
+      "ar": 5800386.68,
+      "dso_days": 37.4
     },
     {
       "period": "2025-05",
-      "revenue": 7596925.07,
-      "ar": 7596925.07,
-      "dso_days": 30.0
+      "revenue": 5803785.66,
+      "ar": 6193383.25,
+      "dso_days": 32.0
     },
     {
       "period": "2025-06",
-      "revenue": 6915425.14,
-      "ar": 6915425.14,
-      "dso_days": 30.0
+      "revenue": 6327453.61,
+      "ar": 8301233.07,
+      "dso_days": 39.4
     },
     {
       "period": "2025-07",
-      "revenue": 7283266.47,
-      "ar": 7283266.47,
-      "dso_days": 30.0
+      "revenue": 7760946.77,
+      "ar": 9482778.69,
+      "dso_days": 36.7
     },
     {
       "period": "2025-08",
-      "revenue": 6411580.88,
-      "ar": 6411580.88,
-      "dso_days": 30.0
+      "revenue": 8638474.78,
+      "ar": 10247361.31,
+      "dso_days": 35.6
     },
     {
       "period": "2025-09",
-      "revenue": 4620937.36,
-      "ar": 4620937.36,
-      "dso_days": 30.0
+      "revenue": 7858385.58,
+      "ar": 10421471.6,
+      "dso_days": 39.8
     },
     {
       "period": "2025-10",
-      "revenue": 4163482.25,
-      "ar": 4163482.25,
-      "dso_days": 30.0
+      "revenue": 8609024.85,
+      "ar": 11519043.52,
+      "dso_days": 40.1
     },
     {
       "period": "2025-11",
-      "revenue": 5505543.1,
-      "ar": 5505543.1,
-      "dso_days": 30.0
+      "revenue": 4959672.32,
+      "ar": 9028433.46,
+      "dso_days": 54.6
     },
     {
       "period": "2025-12",
-      "revenue": 6645806.03,
-      "ar": 6645806.03,
-      "dso_days": 30.0
+      "revenue": 6630525.35,
+      "ar": 10256841.16,
+      "dso_days": 46.4
     },
     {
       "period": "2026-01",
-      "revenue": 6083876.8,
-      "ar": 6083876.8,
-      "dso_days": 30.0
+      "revenue": 6142105.26,
+      "ar": 10986581.12,
+      "dso_days": 53.7
     },
     {
       "period": "2026-02",
-      "revenue": 7782541.61,
-      "ar": 7782541.61,
-      "dso_days": 30.0
+      "revenue": 5066719.54,
+      "ar": 11047748.98,
+      "dso_days": 65.4
     },
     {
       "period": "2026-03",
-      "revenue": 6745490.97,
-      "ar": 6745490.97,
-      "dso_days": 30.0
+      "revenue": 6287682.91,
+      "ar": 11023372.81,
+      "dso_days": 52.6
     },
     {
       "period": "2026-04",
-      "revenue": 7942937.38,
-      "ar": 7942937.38,
-      "dso_days": 30.0
+      "revenue": 8069454.32,
+      "ar": 12359611.42,
+      "dso_days": 45.9
     },
     {
       "period": "2026-05",
-      "revenue": 6315115.49,
-      "ar": 6315115.49,
-      "dso_days": 30.0
-    },
-    {
-      "period": "2026-06",
-      "revenue": 7111818.87,
-      "ar": 7111818.87,
-      "dso_days": 30.0
-    },
-    {
-      "period": "2026-07",
-      "revenue": 6784601.11,
-      "ar": 6784601.11,
-      "dso_days": 30.0
-    },
-    {
-      "period": "2026-08",
-      "revenue": 6825861.09,
-      "ar": 6825861.09,
-      "dso_days": 30.0
-    },
-    {
-      "period": "2026-09",
-      "revenue": 2883515.08,
-      "ar": 2883515.08,
-      "dso_days": 30.0
+      "revenue": 7669873.23,
+      "ar": 15014080.2,
+      "dso_days": 58.7
     }
   ],
   "close_progress": [
     {
       "posting_date": "2026-05-01",
-      "posting_count": 12,
-      "cumulative": 12,
-      "pct_complete": 3.3
+      "posting_count": 28,
+      "cumulative": 28,
+      "pct_complete": 5.9
     },
     {
       "posting_date": "2026-05-02",
-      "posting_count": 10,
-      "cumulative": 22,
-      "pct_complete": 6.1
+      "posting_count": 26,
+      "cumulative": 54,
+      "pct_complete": 11.3
     },
     {
       "posting_date": "2026-05-03",
-      "posting_count": 8,
-      "cumulative": 30,
-      "pct_complete": 8.3
+      "posting_count": 10,
+      "cumulative": 64,
+      "pct_complete": 13.4
     },
     {
       "posting_date": "2026-05-04",
-      "posting_count": 10,
-      "cumulative": 40,
-      "pct_complete": 11.1
+      "posting_count": 12,
+      "cumulative": 76,
+      "pct_complete": 15.9
     },
     {
       "posting_date": "2026-05-05",
-      "posting_count": 4,
-      "cumulative": 44,
-      "pct_complete": 12.2
+      "posting_count": 24,
+      "cumulative": 100,
+      "pct_complete": 20.9
     },
     {
       "posting_date": "2026-05-06",
       "posting_count": 10,
-      "cumulative": 54,
-      "pct_complete": 15.0
+      "cumulative": 110,
+      "pct_complete": 23.0
     },
     {
       "posting_date": "2026-05-07",
-      "posting_count": 10,
-      "cumulative": 64,
-      "pct_complete": 17.8
+      "posting_count": 14,
+      "cumulative": 124,
+      "pct_complete": 25.9
     },
     {
       "posting_date": "2026-05-08",
-      "posting_count": 12,
-      "cumulative": 76,
-      "pct_complete": 21.1
+      "posting_count": 20,
+      "cumulative": 144,
+      "pct_complete": 30.1
     },
     {
       "posting_date": "2026-05-09",
-      "posting_count": 10,
-      "cumulative": 86,
-      "pct_complete": 23.9
+      "posting_count": 18,
+      "cumulative": 162,
+      "pct_complete": 33.9
     },
     {
       "posting_date": "2026-05-10",
-      "posting_count": 12,
-      "cumulative": 98,
-      "pct_complete": 27.2
+      "posting_count": 14,
+      "cumulative": 176,
+      "pct_complete": 36.8
     },
     {
       "posting_date": "2026-05-11",
-      "posting_count": 14,
-      "cumulative": 112,
-      "pct_complete": 31.1
-    },
-    {
-      "posting_date": "2026-05-12",
-      "posting_count": 14,
-      "cumulative": 126,
-      "pct_complete": 35.0
-    },
-    {
-      "posting_date": "2026-05-13",
-      "posting_count": 6,
-      "cumulative": 132,
-      "pct_complete": 36.7
-    },
-    {
-      "posting_date": "2026-05-14",
-      "posting_count": 14,
-      "cumulative": 146,
+      "posting_count": 18,
+      "cumulative": 194,
       "pct_complete": 40.6
     },
     {
+      "posting_date": "2026-05-12",
+      "posting_count": 8,
+      "cumulative": 202,
+      "pct_complete": 42.3
+    },
+    {
+      "posting_date": "2026-05-13",
+      "posting_count": 22,
+      "cumulative": 224,
+      "pct_complete": 46.9
+    },
+    {
+      "posting_date": "2026-05-14",
+      "posting_count": 26,
+      "cumulative": 250,
+      "pct_complete": 52.3
+    },
+    {
       "posting_date": "2026-05-15",
-      "posting_count": 14,
-      "cumulative": 160,
-      "pct_complete": 44.4
+      "posting_count": 24,
+      "cumulative": 274,
+      "pct_complete": 57.3
     },
     {
       "posting_date": "2026-05-16",
-      "posting_count": 14,
-      "cumulative": 174,
-      "pct_complete": 48.3
+      "posting_count": 6,
+      "cumulative": 280,
+      "pct_complete": 58.6
     },
     {
       "posting_date": "2026-05-17",
-      "posting_count": 6,
-      "cumulative": 180,
-      "pct_complete": 50.0
+      "posting_count": 10,
+      "cumulative": 290,
+      "pct_complete": 60.7
     },
     {
       "posting_date": "2026-05-18",
-      "posting_count": 10,
-      "cumulative": 190,
-      "pct_complete": 52.8
+      "posting_count": 22,
+      "cumulative": 312,
+      "pct_complete": 65.3
     },
     {
       "posting_date": "2026-05-19",
-      "posting_count": 8,
-      "cumulative": 198,
-      "pct_complete": 55.0
+      "posting_count": 12,
+      "cumulative": 324,
+      "pct_complete": 67.8
     },
     {
       "posting_date": "2026-05-20",
       "posting_count": 22,
-      "cumulative": 220,
-      "pct_complete": 61.1
+      "cumulative": 346,
+      "pct_complete": 72.4
     },
     {
       "posting_date": "2026-05-21",
-      "posting_count": 12,
-      "cumulative": 232,
-      "pct_complete": 64.4
+      "posting_count": 20,
+      "cumulative": 366,
+      "pct_complete": 76.6
     },
     {
       "posting_date": "2026-05-22",
-      "posting_count": 22,
-      "cumulative": 254,
-      "pct_complete": 70.6
+      "posting_count": 4,
+      "cumulative": 370,
+      "pct_complete": 77.4
     },
     {
       "posting_date": "2026-05-23",
-      "posting_count": 12,
-      "cumulative": 266,
-      "pct_complete": 73.9
+      "posting_count": 14,
+      "cumulative": 384,
+      "pct_complete": 80.3
     },
     {
       "posting_date": "2026-05-24",
       "posting_count": 20,
-      "cumulative": 286,
-      "pct_complete": 79.4
+      "cumulative": 404,
+      "pct_complete": 84.5
     },
     {
       "posting_date": "2026-05-25",
-      "posting_count": 4,
-      "cumulative": 290,
-      "pct_complete": 80.6
+      "posting_count": 6,
+      "cumulative": 410,
+      "pct_complete": 85.8
     },
     {
       "posting_date": "2026-05-26",
-      "posting_count": 8,
-      "cumulative": 298,
-      "pct_complete": 82.8
+      "posting_count": 14,
+      "cumulative": 424,
+      "pct_complete": 88.7
     },
     {
       "posting_date": "2026-05-27",
-      "posting_count": 18,
-      "cumulative": 316,
-      "pct_complete": 87.8
+      "posting_count": 12,
+      "cumulative": 436,
+      "pct_complete": 91.2
     },
     {
       "posting_date": "2026-05-28",
-      "posting_count": 4,
-      "cumulative": 320,
-      "pct_complete": 88.9
+      "posting_count": 10,
+      "cumulative": 446,
+      "pct_complete": 93.3
     },
     {
       "posting_date": "2026-05-29",
-      "posting_count": 10,
-      "cumulative": 330,
-      "pct_complete": 91.7
+      "posting_count": 6,
+      "cumulative": 452,
+      "pct_complete": 94.6
     },
     {
       "posting_date": "2026-05-30",
-      "posting_count": 16,
-      "cumulative": 346,
-      "pct_complete": 96.1
+      "posting_count": 10,
+      "cumulative": 462,
+      "pct_complete": 96.7
     },
     {
       "posting_date": "2026-05-31",
-      "posting_count": 14,
-      "cumulative": 360,
+      "posting_count": 16,
+      "cumulative": 478,
       "pct_complete": 100.0
     }
   ],
   "top_gl_postings": [
     {
-      "document_number": "GL0000002293",
+      "document_number": "GL0000005647",
       "company_code": "KS01",
-      "posting_date": "2024-10-07",
-      "posting_year": 2024,
-      "posting_month": 10,
+      "posting_date": "2026-02-01",
+      "posting_year": 2026,
+      "posting_month": 2,
       "gl_account": "210100",
       "gl_account_description": "Trade payables - third party",
       "account_class": "liability",
-      "signed_local_amount": -585559.06,
+      "signed_local_amount": -583260.93,
       "customer_id": null,
-      "vendor_id": "V002012",
+      "vendor_id": "V002016",
       "currency": "USD"
     },
     {
-      "document_number": "GL0000002293",
+      "document_number": "GL0000005647",
       "company_code": "KS01",
-      "posting_date": "2024-10-07",
-      "posting_year": 2024,
-      "posting_month": 10,
+      "posting_date": "2026-02-01",
+      "posting_year": 2026,
+      "posting_month": 2,
       "gl_account": "510000",
       "gl_account_description": "COGS - raw materials",
       "account_class": "expense",
-      "signed_local_amount": 585559.06,
+      "signed_local_amount": 583260.93,
       "customer_id": null,
       "vendor_id": null,
       "currency": "USD"
     },
     {
-      "document_number": "GL0000002954",
+      "document_number": "GL0000004651",
       "company_code": "KS01",
-      "posting_date": "2025-08-30",
+      "posting_date": "2025-02-17",
       "posting_year": 2025,
-      "posting_month": 8,
+      "posting_month": 2,
       "gl_account": "210100",
       "gl_account_description": "Trade payables - third party",
       "account_class": "liability",
-      "signed_local_amount": -565396.58,
-      "customer_id": null,
-      "vendor_id": "V002018",
-      "currency": "USD"
-    },
-    {
-      "document_number": "GL0000002954",
-      "company_code": "KS01",
-      "posting_date": "2025-08-30",
-      "posting_year": 2025,
-      "posting_month": 8,
-      "gl_account": "510000",
-      "gl_account_description": "COGS - raw materials",
-      "account_class": "expense",
-      "signed_local_amount": 565396.58,
-      "customer_id": null,
-      "vendor_id": null,
-      "currency": "USD"
-    },
-    {
-      "document_number": "GL0000003630",
-      "company_code": "KS01",
-      "posting_date": "2026-06-30",
-      "posting_year": 2026,
-      "posting_month": 6,
-      "gl_account": "210100",
-      "gl_account_description": "Trade payables - third party",
-      "account_class": "liability",
-      "signed_local_amount": -554469.3,
-      "customer_id": null,
-      "vendor_id": "V002012",
-      "currency": "USD"
-    },
-    {
-      "document_number": "GL0000003630",
-      "company_code": "KS01",
-      "posting_date": "2026-06-30",
-      "posting_year": 2026,
-      "posting_month": 6,
-      "gl_account": "510000",
-      "gl_account_description": "COGS - raw materials",
-      "account_class": "expense",
-      "signed_local_amount": 554469.3,
-      "customer_id": null,
-      "vendor_id": null,
-      "currency": "USD"
-    },
-    {
-      "document_number": "GL0000002282",
-      "company_code": "KS01",
-      "posting_date": "2024-10-20",
-      "posting_year": 2024,
-      "posting_month": 10,
-      "gl_account": "210100",
-      "gl_account_description": "Trade payables - third party",
-      "account_class": "liability",
-      "signed_local_amount": -548901.6,
-      "customer_id": null,
-      "vendor_id": "V002012",
-      "currency": "USD"
-    },
-    {
-      "document_number": "GL0000002282",
-      "company_code": "KS01",
-      "posting_date": "2024-10-20",
-      "posting_year": 2024,
-      "posting_month": 10,
-      "gl_account": "510000",
-      "gl_account_description": "COGS - raw materials",
-      "account_class": "expense",
-      "signed_local_amount": 548901.6,
-      "customer_id": null,
-      "vendor_id": null,
-      "currency": "USD"
-    },
-    {
-      "document_number": "GL0000003474",
-      "company_code": "KS01",
-      "posting_date": "2026-04-05",
-      "posting_year": 2026,
-      "posting_month": 4,
-      "gl_account": "210100",
-      "gl_account_description": "Trade payables - third party",
-      "account_class": "liability",
-      "signed_local_amount": -548146.83,
-      "customer_id": null,
-      "vendor_id": "V002000",
-      "currency": "USD"
-    },
-    {
-      "document_number": "GL0000003474",
-      "company_code": "KS01",
-      "posting_date": "2026-04-05",
-      "posting_year": 2026,
-      "posting_month": 4,
-      "gl_account": "510000",
-      "gl_account_description": "COGS - raw materials",
-      "account_class": "expense",
-      "signed_local_amount": 548146.83,
-      "customer_id": null,
-      "vendor_id": null,
-      "currency": "USD"
-    },
-    {
-      "document_number": "GL0000002431",
-      "company_code": "KS01",
-      "posting_date": "2024-12-07",
-      "posting_year": 2024,
-      "posting_month": 12,
-      "gl_account": "210100",
-      "gl_account_description": "Trade payables - third party",
-      "account_class": "liability",
-      "signed_local_amount": -543809.0,
-      "customer_id": null,
-      "vendor_id": "V002009",
-      "currency": "USD"
-    },
-    {
-      "document_number": "GL0000002431",
-      "company_code": "KS01",
-      "posting_date": "2024-12-07",
-      "posting_year": 2024,
-      "posting_month": 12,
-      "gl_account": "510000",
-      "gl_account_description": "COGS - raw materials",
-      "account_class": "expense",
-      "signed_local_amount": 543809.0,
-      "customer_id": null,
-      "vendor_id": null,
-      "currency": "USD"
-    },
-    {
-      "document_number": "GL0000003593",
-      "company_code": "KS01",
-      "posting_date": "2026-05-29",
-      "posting_year": 2026,
-      "posting_month": 5,
-      "gl_account": "210100",
-      "gl_account_description": "Trade payables - third party",
-      "account_class": "liability",
-      "signed_local_amount": -532609.56,
-      "customer_id": null,
-      "vendor_id": "V002014",
-      "currency": "USD"
-    },
-    {
-      "document_number": "GL0000003593",
-      "company_code": "KS01",
-      "posting_date": "2026-05-29",
-      "posting_year": 2026,
-      "posting_month": 5,
-      "gl_account": "510000",
-      "gl_account_description": "COGS - raw materials",
-      "account_class": "expense",
-      "signed_local_amount": 532609.56,
-      "customer_id": null,
-      "vendor_id": null,
-      "currency": "USD"
-    },
-    {
-      "document_number": "GL0000003511",
-      "company_code": "KS01",
-      "posting_date": "2026-04-08",
-      "posting_year": 2026,
-      "posting_month": 4,
-      "gl_account": "210100",
-      "gl_account_description": "Trade payables - third party",
-      "account_class": "liability",
-      "signed_local_amount": -532045.2,
+      "signed_local_amount": -577954.14,
       "customer_id": null,
       "vendor_id": "V002004",
       "currency": "USD"
     },
     {
-      "document_number": "GL0000003511",
+      "document_number": "GL0000004651",
       "company_code": "KS01",
-      "posting_date": "2026-04-08",
-      "posting_year": 2026,
+      "posting_date": "2025-02-17",
+      "posting_year": 2025,
+      "posting_month": 2,
+      "gl_account": "510000",
+      "gl_account_description": "COGS - raw materials",
+      "account_class": "expense",
+      "signed_local_amount": 577954.14,
+      "customer_id": null,
+      "vendor_id": null,
+      "currency": "USD"
+    },
+    {
+      "document_number": "GL0000005302",
+      "company_code": "KS01",
+      "posting_date": "2025-09-05",
+      "posting_year": 2025,
+      "posting_month": 9,
+      "gl_account": "210100",
+      "gl_account_description": "Trade payables - third party",
+      "account_class": "liability",
+      "signed_local_amount": -568943.93,
+      "customer_id": null,
+      "vendor_id": "V002011",
+      "currency": "USD"
+    },
+    {
+      "document_number": "GL0000005302",
+      "company_code": "KS01",
+      "posting_date": "2025-09-05",
+      "posting_year": 2025,
+      "posting_month": 9,
+      "gl_account": "510000",
+      "gl_account_description": "COGS - raw materials",
+      "account_class": "expense",
+      "signed_local_amount": 568943.93,
+      "customer_id": null,
+      "vendor_id": null,
+      "currency": "USD"
+    },
+    {
+      "document_number": "GL0000004817",
+      "company_code": "KS01",
+      "posting_date": "2025-04-17",
+      "posting_year": 2025,
+      "posting_month": 4,
+      "gl_account": "210100",
+      "gl_account_description": "Trade payables - third party",
+      "account_class": "liability",
+      "signed_local_amount": -562761.85,
+      "customer_id": null,
+      "vendor_id": "V002016",
+      "currency": "USD"
+    },
+    {
+      "document_number": "GL0000004817",
+      "company_code": "KS01",
+      "posting_date": "2025-04-17",
+      "posting_year": 2025,
       "posting_month": 4,
       "gl_account": "510000",
       "gl_account_description": "COGS - raw materials",
       "account_class": "expense",
-      "signed_local_amount": 532045.2,
+      "signed_local_amount": 562761.85,
       "customer_id": null,
       "vendor_id": null,
       "currency": "USD"
     },
     {
-      "document_number": "GL0000002918",
+      "document_number": "GL0000005928",
       "company_code": "KS01",
-      "posting_date": "2025-08-17",
-      "posting_year": 2025,
-      "posting_month": 8,
+      "posting_date": "2026-07-13",
+      "posting_year": 2026,
+      "posting_month": 7,
       "gl_account": "210100",
       "gl_account_description": "Trade payables - third party",
       "account_class": "liability",
-      "signed_local_amount": -530464.56,
+      "signed_local_amount": -559296.9,
       "customer_id": null,
-      "vendor_id": "V002002",
+      "vendor_id": "V002010",
       "currency": "USD"
     },
     {
-      "document_number": "GL0000002918",
+      "document_number": "GL0000005928",
       "company_code": "KS01",
-      "posting_date": "2025-08-17",
-      "posting_year": 2025,
-      "posting_month": 8,
+      "posting_date": "2026-07-13",
+      "posting_year": 2026,
+      "posting_month": 7,
       "gl_account": "510000",
       "gl_account_description": "COGS - raw materials",
       "account_class": "expense",
-      "signed_local_amount": 530464.56,
+      "signed_local_amount": 559296.9,
       "customer_id": null,
       "vendor_id": null,
       "currency": "USD"
     },
     {
-      "document_number": "GL0000002356",
+      "document_number": "GL0000004954",
       "company_code": "KS01",
-      "posting_date": "2024-09-10",
+      "posting_date": "2025-07-24",
+      "posting_year": 2025,
+      "posting_month": 7,
+      "gl_account": "210100",
+      "gl_account_description": "Trade payables - third party",
+      "account_class": "liability",
+      "signed_local_amount": -544070.94,
+      "customer_id": null,
+      "vendor_id": "V002016",
+      "currency": "USD"
+    },
+    {
+      "document_number": "GL0000004954",
+      "company_code": "KS01",
+      "posting_date": "2025-07-24",
+      "posting_year": 2025,
+      "posting_month": 7,
+      "gl_account": "510000",
+      "gl_account_description": "COGS - raw materials",
+      "account_class": "expense",
+      "signed_local_amount": 544070.94,
+      "customer_id": null,
+      "vendor_id": null,
+      "currency": "USD"
+    },
+    {
+      "document_number": "GL0000004329",
+      "company_code": "KS01",
+      "posting_date": "2024-10-12",
+      "posting_year": 2024,
+      "posting_month": 10,
+      "gl_account": "210100",
+      "gl_account_description": "Trade payables - third party",
+      "account_class": "liability",
+      "signed_local_amount": -539407.25,
+      "customer_id": null,
+      "vendor_id": "V002003",
+      "currency": "USD"
+    },
+    {
+      "document_number": "GL0000004329",
+      "company_code": "KS01",
+      "posting_date": "2024-10-12",
+      "posting_year": 2024,
+      "posting_month": 10,
+      "gl_account": "510000",
+      "gl_account_description": "COGS - raw materials",
+      "account_class": "expense",
+      "signed_local_amount": 539407.25,
+      "customer_id": null,
+      "vendor_id": null,
+      "currency": "USD"
+    },
+    {
+      "document_number": "GL0000004358",
+      "company_code": "KS01",
+      "posting_date": "2024-09-19",
       "posting_year": 2024,
       "posting_month": 9,
       "gl_account": "210100",
       "gl_account_description": "Trade payables - third party",
       "account_class": "liability",
-      "signed_local_amount": -529254.0,
+      "signed_local_amount": -538655.18,
       "customer_id": null,
-      "vendor_id": "V002005",
+      "vendor_id": "V002013",
       "currency": "USD"
     },
     {
-      "document_number": "GL0000002356",
+      "document_number": "GL0000004358",
       "company_code": "KS01",
-      "posting_date": "2024-09-10",
+      "posting_date": "2024-09-19",
       "posting_year": 2024,
       "posting_month": 9,
       "gl_account": "510000",
       "gl_account_description": "COGS - raw materials",
       "account_class": "expense",
-      "signed_local_amount": 529254.0,
+      "signed_local_amount": 538655.18,
       "customer_id": null,
       "vendor_id": null,
       "currency": "USD"
     },
     {
-      "document_number": "GL0000003115",
+      "document_number": "GL0000005640",
       "company_code": "KS01",
-      "posting_date": "2025-09-28",
-      "posting_year": 2025,
-      "posting_month": 9,
+      "posting_date": "2026-02-12",
+      "posting_year": 2026,
+      "posting_month": 2,
       "gl_account": "210100",
       "gl_account_description": "Trade payables - third party",
       "account_class": "liability",
-      "signed_local_amount": -527466.8,
+      "signed_local_amount": -538650.0,
       "customer_id": null,
-      "vendor_id": "V002001",
+      "vendor_id": "V002010",
       "currency": "USD"
     },
     {
-      "document_number": "GL0000003115",
+      "document_number": "GL0000005640",
       "company_code": "KS01",
-      "posting_date": "2025-09-28",
-      "posting_year": 2025,
-      "posting_month": 9,
+      "posting_date": "2026-02-12",
+      "posting_year": 2026,
+      "posting_month": 2,
       "gl_account": "510000",
       "gl_account_description": "COGS - raw materials",
       "account_class": "expense",
-      "signed_local_amount": 527466.8,
+      "signed_local_amount": 538650.0,
       "customer_id": null,
       "vendor_id": null,
       "currency": "USD"
     },
     {
-      "document_number": "GL0000003415",
+      "document_number": "GL0000005505",
       "company_code": "KS01",
-      "posting_date": "2026-05-29",
-      "posting_year": 2026,
-      "posting_month": 5,
-      "gl_account": "210100",
-      "gl_account_description": "Trade payables - third party",
-      "account_class": "liability",
-      "signed_local_amount": -524850.69,
-      "customer_id": null,
-      "vendor_id": "V002002",
-      "currency": "USD"
-    },
-    {
-      "document_number": "GL0000003415",
-      "company_code": "KS01",
-      "posting_date": "2026-05-29",
-      "posting_year": 2026,
-      "posting_month": 5,
-      "gl_account": "510000",
-      "gl_account_description": "COGS - raw materials",
-      "account_class": "expense",
-      "signed_local_amount": 524850.69,
-      "customer_id": null,
-      "vendor_id": null,
-      "currency": "USD"
-    },
-    {
-      "document_number": "GL0000003291",
-      "company_code": "KS01",
-      "posting_date": "2026-01-29",
+      "posting_date": "2026-01-10",
       "posting_year": 2026,
       "posting_month": 1,
       "gl_account": "210100",
       "gl_account_description": "Trade payables - third party",
       "account_class": "liability",
-      "signed_local_amount": -509815.62,
+      "signed_local_amount": -533593.08,
       "customer_id": null,
-      "vendor_id": "V002012",
+      "vendor_id": "V002009",
+      "currency": "USD"
+    },
+    {
+      "document_number": "GL0000005505",
+      "company_code": "KS01",
+      "posting_date": "2026-01-10",
+      "posting_year": 2026,
+      "posting_month": 1,
+      "gl_account": "510000",
+      "gl_account_description": "COGS - raw materials",
+      "account_class": "expense",
+      "signed_local_amount": 533593.08,
+      "customer_id": null,
+      "vendor_id": null,
+      "currency": "USD"
+    },
+    {
+      "document_number": "GL0000005480",
+      "company_code": "KS01",
+      "posting_date": "2026-01-28",
+      "posting_year": 2026,
+      "posting_month": 1,
+      "gl_account": "210100",
+      "gl_account_description": "Trade payables - third party",
+      "account_class": "liability",
+      "signed_local_amount": -522339.2,
+      "customer_id": null,
+      "vendor_id": "V002013",
+      "currency": "USD"
+    },
+    {
+      "document_number": "GL0000005480",
+      "company_code": "KS01",
+      "posting_date": "2026-01-28",
+      "posting_year": 2026,
+      "posting_month": 1,
+      "gl_account": "510000",
+      "gl_account_description": "COGS - raw materials",
+      "account_class": "expense",
+      "signed_local_amount": 522339.2,
+      "customer_id": null,
+      "vendor_id": null,
+      "currency": "USD"
+    },
+    {
+      "document_number": "GL0000005924",
+      "company_code": "KS01",
+      "posting_date": "2026-07-19",
+      "posting_year": 2026,
+      "posting_month": 7,
+      "gl_account": "210100",
+      "gl_account_description": "Trade payables - third party",
+      "account_class": "liability",
+      "signed_local_amount": -518259.6,
+      "customer_id": null,
+      "vendor_id": "V002015",
+      "currency": "USD"
+    },
+    {
+      "document_number": "GL0000005924",
+      "company_code": "KS01",
+      "posting_date": "2026-07-19",
+      "posting_year": 2026,
+      "posting_month": 7,
+      "gl_account": "510000",
+      "gl_account_description": "COGS - raw materials",
+      "account_class": "expense",
+      "signed_local_amount": 518259.6,
+      "customer_id": null,
+      "vendor_id": null,
+      "currency": "USD"
+    },
+    {
+      "document_number": "GL0000006013",
+      "company_code": "KS01",
+      "posting_date": "2026-07-19",
+      "posting_year": 2026,
+      "posting_month": 7,
+      "gl_account": "210100",
+      "gl_account_description": "Trade payables - third party",
+      "account_class": "liability",
+      "signed_local_amount": -517111.68,
+      "customer_id": null,
+      "vendor_id": "V002015",
       "currency": "USD"
     }
   ]

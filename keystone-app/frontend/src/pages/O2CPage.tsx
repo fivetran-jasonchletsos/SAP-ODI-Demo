@@ -2,8 +2,8 @@ import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxi
 import { useSnapshot } from '../api/snapshot'
 import type { O2CData } from '../types'
 import { Card, PageHeader } from '../components/PageHeader'
-
-const money = (v: number) => `$${(v/1000).toFixed(0)}k`
+import { Caption } from '../components/Caption'
+import { theme, axisProps, gridProps, tooltipProps, fmt } from '../components/chartTheme'
 
 export function O2CPage() {
   const d = useSnapshot<O2CData>('o2c.json')
@@ -14,7 +14,7 @@ export function O2CPage() {
       <PageHeader
         eyebrow="Order-to-Cash"
         title="Funnel, on-time delivery, and customer ranking"
-        sub="Built from VBAK/VBAP + VBRK/VBRP joined in the silver layer. Open vs closed status comes from comparing order quantity to billed quantity per line."
+        sub="Built from VBAK/VBAP joined with VBRK/VBRP in the silver layer; order status derives from comparing order quantity to billed quantity per line."
       />
 
       <div className="grid sm:grid-cols-3 gap-4">
@@ -24,25 +24,28 @@ export function O2CPage() {
             <Row label="Billed"   value={data?.funnel.billed ?? 0} />
             <Row label="Open"     value={data?.funnel.open ?? 0} />
           </div>
+          <Caption>Sales order count by status (TTM).</Caption>
         </Card>
         <Card title="On-time delivery">
-          <div className="text-3xl font-semibold text-amber-300">
-            {data?.on_time_delivery.pct.toFixed(1) ?? '0'}%
+          <div className="text-3xl font-semibold text-slate-100">
+            {data?.on_time_delivery.pct.toFixed(1) ?? '0'}<span className="text-base text-slate-400">%</span>
           </div>
           <div className="text-xs text-slate-500 mt-1">
-            {data?.on_time_delivery.on_time ?? 0} of {data?.on_time_delivery.total_closed ?? 0} closed orders within 30d
+            {data?.on_time_delivery.on_time ?? 0} of {data?.on_time_delivery.total_closed ?? 0} closed orders billed within 30 days
           </div>
+          <Caption>Proxy for shipped-on-time using days-to-first-bill.</Caption>
         </Card>
-        <Card title="O2C cycle bands">
+        <Card title="Order-to-cash cycle">
           <ResponsiveContainer width="100%" height={140}>
-            <BarChart data={data?.o2c_bands ?? []}>
-              <CartesianGrid stroke="#1e293b" strokeDasharray="3 3" />
-              <XAxis dataKey="band" stroke="#94a3b8" tick={{ fontSize: 11 }} />
-              <YAxis stroke="#94a3b8" tick={{ fontSize: 11 }} />
-              <Tooltip contentStyle={{ background: '#0f172a', border: '1px solid #334155' }} />
-              <Bar dataKey="count" fill="#fbbf24" />
+            <BarChart data={data?.o2c_bands ?? []} margin={{ top: 4, right: 8, bottom: 8, left: 0 }}>
+              <CartesianGrid {...gridProps} />
+              <XAxis dataKey="band" {...axisProps} />
+              <YAxis {...axisProps} width={36} />
+              <Tooltip {...tooltipProps} />
+              <Bar dataKey="count" fill={theme.primary} />
             </BarChart>
           </ResponsiveContainer>
+          <Caption>fast ≤14d · normal ≤30d · slow ≤60d · very_slow &gt;60d · unbilled</Caption>
         </Card>
       </div>
 
@@ -65,8 +68,8 @@ export function O2CPage() {
                     <div className="text-xs text-slate-500 font-mono">{c.customer_id}</div>
                   </td>
                   <td className="py-2 pr-4 text-right tabular-nums">{c.order_count}</td>
-                  <td className="py-2 pr-4 text-right tabular-nums">{money(c.revenue)}</td>
-                  <td className="py-2 text-right tabular-nums text-slate-400">{money(c.open_value)}</td>
+                  <td className="py-2 pr-4 text-right tabular-nums">{fmt.money(c.revenue)}</td>
+                  <td className="py-2 text-right tabular-nums text-slate-400">{fmt.money(c.open_value)}</td>
                 </tr>
               ))}
             </tbody>
@@ -82,10 +85,11 @@ export function O2CPage() {
                 <span className="font-mono text-xs text-slate-500 mr-2">{b.sales_doc_id}-{b.line_item}</span>
                 {b.customer_name} · material {b.material_id}
               </span>
-              <span className="text-slate-400 tabular-nums">{money(b.order_value)}</span>
+              <span className="text-slate-400 tabular-nums">{fmt.money(b.order_value)}</span>
             </li>
           ))}
         </ul>
+        <Caption>Open sales order lines with no billing record yet.</Caption>
       </Card>
     </div>
   )
@@ -93,6 +97,9 @@ export function O2CPage() {
 
 function Row({ label, value }: { label: string; value: number }) {
   return (
-    <div className="flex justify-between"><span className="text-slate-400">{label}</span><span className="tabular-nums">{value.toLocaleString()}</span></div>
+    <div className="flex justify-between text-slate-200">
+      <span className="text-slate-400">{label}</span>
+      <span className="tabular-nums">{value.toLocaleString()}</span>
+    </div>
   )
 }

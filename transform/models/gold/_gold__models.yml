@@ -1,0 +1,144 @@
+version: 2
+
+# Gold layer contract.
+# Reis & Housley: the gold (or "serving") layer is where data engineering meets
+# the consumer. Every model here is what a BI tool, analyst, or AI agent reads.
+# So: column-level descriptions, surrogate keys, uniqueness tests on grain,
+# materialized as Iceberg parquet for engine portability.
+
+models:
+  - name: dim_company
+    description: One row per SAP company code.
+    columns:
+      - name: company_code
+        data_tests: [not_null, unique]
+      - name: company_name
+      - name: functional_currency
+        data_tests: [not_null]
+
+  - name: dim_gl_account
+    description: GL account + classification (asset/liability/equity/revenue/expense).
+    columns:
+      - name: gl_account
+        data_tests: [not_null]
+      - name: account_class
+        data_tests:
+          - accepted_values:
+              values: ['asset', 'liability', 'equity', 'revenue', 'expense', 'other']
+
+  - name: dim_customer
+    columns:
+      - name: customer_id
+        data_tests: [not_null, unique]
+
+  - name: dim_vendor
+    columns:
+      - name: vendor_id
+        data_tests: [not_null, unique]
+
+  - name: dim_material
+    columns:
+      - name: material_id
+        data_tests: [not_null, unique]
+
+  - name: dim_plant
+    columns:
+      - name: plant_id
+        data_tests: [not_null, unique]
+
+  - name: fct_gl_journal
+    description: |
+      Grain: one row per (company_code, document_number, fiscal_year, line_item).
+      Partition: year(posting_date), company_code.
+      This is the canonical posting log — every other finance mart reads from here.
+    columns:
+      - name: journal_key
+        data_tests: [not_null, unique]
+      - name: company_code
+        data_tests: [not_null]
+      - name: posting_date
+        data_tests: [not_null]
+      - name: gl_account
+        data_tests: [not_null]
+      - name: signed_local_amount
+        description: Sum to zero over a balanced posting; positive=debit, negative=credit.
+
+  - name: fct_sales_orders
+    description: Grain — one row per (sales_doc_id, line_item). Partition by year(created_date).
+    columns:
+      - name: sales_order_key
+        data_tests: [not_null, unique]
+      - name: sales_doc_id
+        data_tests: [not_null]
+      - name: order_status
+        data_tests:
+          - accepted_values:
+              values: ['open', 'partial', 'closed']
+
+  - name: fct_invoices
+    description: Grain — one row per (billing_doc_id, line_item).
+    columns:
+      - name: invoice_key
+        data_tests: [not_null, unique]
+      - name: customer_id
+        data_tests: [not_null]
+      - name: billing_date
+        data_tests: [not_null]
+
+  - name: fct_purchase_orders
+    description: Grain — one row per (purchase_order_id, line_item).
+    columns:
+      - name: po_key
+        data_tests: [not_null, unique]
+      - name: vendor_id
+        data_tests: [not_null]
+      - name: po_line_status
+        data_tests:
+          - accepted_values:
+              values: ['open', 'partial', 'closed']
+
+  - name: fct_supplier_invoices
+    columns:
+      - name: supplier_invoice_key
+        data_tests: [not_null, unique]
+
+  - name: fct_inventory_position
+    description: Snapshot — one row per (material_id, plant_id) at run time.
+    columns:
+      - name: inventory_key
+        data_tests: [not_null, unique]
+
+  - name: mart_trial_balance
+    description: Period balances by GL account. Sum of debit_total - credit_total per account = net_balance.
+
+  - name: mart_dso
+    description: Days Sales Outstanding per (customer_id, period_month). Outstanding-balance method.
+    columns:
+      - name: customer_id
+      - name: period_year
+      - name: period_month
+
+  - name: mart_dpo
+    description: Days Payable Outstanding per (vendor_id, period_month).
+
+  - name: mart_supplier_scorecard
+    description: One row per vendor. Grades against the 90% three-way-match target.
+    columns:
+      - name: supplier_grade
+        data_tests:
+          - accepted_values:
+              values: ['A', 'B', 'C', 'D']
+
+  - name: mart_inventory_turns
+    description: Turns = TTM-revenue-proxy / inventory_value. One row per (material_id, plant_id).
+
+  - name: mart_order_to_cash
+    description: O2C cycle time per sales document. days_to_first_bill bucketed into o2c_band.
+    columns:
+      - name: o2c_band
+        data_tests:
+          - accepted_values:
+              values: ['fast', 'normal', 'slow', 'very_slow', 'unbilled']
+
+  - name: mart_finance_close
+    description: Close progress curve — postings cumulated by day within the fiscal month.
