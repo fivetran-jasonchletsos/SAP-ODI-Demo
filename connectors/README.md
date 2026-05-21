@@ -19,10 +19,10 @@ namespace. That sits cleanly outside the restricted ODP RFC surface.
 
 | Surface | Status as of 2026-05 | Use in this demo |
 |---|---|---|
-| **Fivetran NetWeaver path** — RFC calls against the NetWeaver Application Server plus Fivetran-managed ABAP triggers and shadow tables in the `/FIVETRAN/` namespace. Table-layer CDC. | Unaffected by the new policy. | Yes — this is what Keystone uses. |
+| **Fivetran** — RFC calls against the NetWeaver Application Server plus Fivetran-managed ABAP triggers and shadow tables in the `/FIVETRAN/` namespace. Table-layer CDC. | Unaffected by the new policy. | Yes — this is what Keystone uses. |
 | **ODP RFC** — Operational Data Provisioning RFC functions used by BW extractors and CDS view extractors. | Blocking begins July 2026, exceptions through year-end. | Do not use for new connectors. |
 
-The Fivetran NetWeaver path reads at the application-table layer through
+The Fivetran path reads at the application-table layer through
 Fivetran's own triggers, not through the ODP RFC functions SAP is
 restricting.
 
@@ -56,9 +56,9 @@ Column hashing:        none (demo system, no PII)
 Historical sync:       full re-sync on first run, then CDC
 ```
 
-Prerequisites in the SAP system: Fivetran NetWeaver API transport
-installed, RFC user with SELECT and TRIGGER privileges on the source
-schemas, plus the `/FIVETRAN/` namespace authorization.
+Prerequisites in the SAP system: Fivetran's ABAP transport installed
+into the `/FIVETRAN/` namespace, RFC user with SELECT and TRIGGER
+privileges on the source schemas.
 
 ## Demo environment access
 

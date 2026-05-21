@@ -165,7 +165,7 @@
       },
       {
         "id": "ft",
-        "label": "Fivetran NetWeaver",
+        "label": "Fivetran",
         "group": "ingest"
       },
       {
