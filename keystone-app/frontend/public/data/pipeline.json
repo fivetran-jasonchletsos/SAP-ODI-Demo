@@ -1,6 +1,6 @@
 {
   "connector_status": {
-    "name": "SAP S/4HANA (SLT)",
+    "name": "SAP S/4HANA (NetWeaver path)",
     "state": "healthy",
     "last_sync_at": "2026-05-20T14:22:00Z",
     "sync_frequency_min": 15,
@@ -36,12 +36,12 @@
     {
       "id": "odp_rfc_blocked",
       "title": "ODP RFC blocking (July 2026)",
-      "narrative": "If Keystone had used ODP RFC, the source connector would have failed starting July 2026. Our SLT path is unaffected \u2014 this is the architecture decision the policy forced.",
+      "narrative": "If Keystone had used ODP RFC, the source connector would have failed starting July 2026. Our NetWeaver + Fivetran-triggers path is unaffected \u2014 this is the architecture decision the policy forced.",
       "would_impact": false
     },
     {
       "id": "sap_credentials_rotated",
-      "title": "SLT credentials rotated",
+      "title": "NetWeaver RFC credentials rotated",
       "narrative": "Fivetran retries with the new credential after Slab updates the secret.",
       "would_impact": true
     },

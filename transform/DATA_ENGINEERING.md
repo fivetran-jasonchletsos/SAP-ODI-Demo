@@ -10,7 +10,7 @@ deep-dive after the demo.
 | Phase | Where it lives in this repo | Implementation notes |
 |---|---|---|
 | **Generation** | Live SAP S/4HANA at Keystone | Source of record is SAP's application tier. We do not modify it. |
-| **Ingestion** | `connectors/` — Fivetran managed SAP connector (SLT path) | Trigger-based CDC via SLT, not ODP RFC (deprecating July 2026 per the policy brief). Sync cadence 15 min. |
+| **Ingestion** | `connectors/` — Fivetran managed SAP connector (NetWeaver + triggers path) | Trigger-based CDC via Fivetran's own triggers in the `/FIVETRAN/` namespace, not ODP RFC (deprecating July 2026 per the policy brief). Sync cadence 15 min. |
 | **Storage** | `infra/` — S3 + Apache Iceberg + AWS Glue catalog | Object storage decoupled from compute; columnar parquet; partition pruning on year(posting_date) and company_code. |
 | **Transformation** | `transform/` — dbt project `sap_odi` | Medallion: bronze sources → silver views (decode + join) → gold tables (facts/dims/marts). |
 | **Serving** | `keystone-app/frontend/` + AI agent | The frontend reads a JSON snapshot of the gold layer. The /agent page reads the lake directly via the Glue catalog. |
@@ -72,7 +72,7 @@ nothing downstream materializes. That's the Reis & Housley undercurrent
 
 | Capability | Status | Why not (yet) |
 |---|---|---|
-| Streaming ingestion | Not implemented | SAP source updates at SLT cadence (sub-minute). True streaming would be DataStream/Kafka pre-Iceberg; that's a v2 conversation. |
+| Streaming ingestion | Not implemented | SAP source updates at trigger cadence (sub-minute). True streaming would be DataStream/Kafka pre-Iceberg; that's a v2 conversation. |
 | Reverse ETL | Not implemented | Demo is a read-side narrative. If the prospect asks "how do I get insights back into SAP?", that's a Census/Hightouch conversation we steer toward separately. |
 | Lake Formation column-level security | Not implemented | Demo runs IAM-scoped only. Enterprise rollout would add LF tag-based access on PII columns in KNA1 / LFA1. |
 | dbt semantic layer in production | Defined, not deployed | `metrics/sap_metrics.yml` is the contract. Hooking it to Cube / dbt Cloud Semantic Layer is the customer's choice. |

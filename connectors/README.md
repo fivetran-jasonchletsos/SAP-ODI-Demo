@@ -12,21 +12,25 @@ flagged that SAP will begin blocking the **ODP RFC interface in July 2026**,
 with exceptions through year-end. Any data pipeline that pulls SAP data
 through ODP RFC is on a hard deprecation clock.
 
-Fivetran's SAP connector has two extraction paths. We deliberately use
-the one that is not affected.
+Fivetran's SAP ERP on HANA connector does **not** use ODP RFC. It uses
+the NetWeaver Application Server via RFC calls plus Fivetran's own
+delete-capture triggers and shadow tables installed in the `/FIVETRAN/`
+namespace. That sits cleanly outside the restricted ODP RFC surface.
 
-| Path | Status as of 2026-05 | Use in this demo |
+| Surface | Status as of 2026-05 | Use in this demo |
 |---|---|---|
-| **SLT-based** (SAP Landscape Transformation) — trigger-based change data capture from SAP system tables | Unaffected by the new policy. Recommended path. | Yes — this is what Keystone uses. |
-| **ODP RFC** (Operational Data Provisioning via RFC) | Blocking begins July 2026, exceptions through year-end | Do not use for new connectors. |
+| **Fivetran NetWeaver path** — RFC calls against the NetWeaver Application Server plus Fivetran-managed ABAP triggers and shadow tables in the `/FIVETRAN/` namespace. Table-layer CDC. | Unaffected by the new policy. | Yes — this is what Keystone uses. |
+| **ODP RFC** — Operational Data Provisioning RFC functions used by BW extractors and CDS view extractors. | Blocking begins July 2026, exceptions through year-end. | Do not use for new connectors. |
 
-The Fivetran SLT path operates on application-tier table changes, not the
-restricted RFC surface, so it sits cleanly outside the policy.
+The Fivetran NetWeaver path reads at the application-table layer through
+Fivetran's own triggers, not through the ODP RFC functions SAP is
+restricting.
 
 ## Source system
 
-Keystone Industries runs SAP S/4HANA on-premise with SLT replicating to
-Fivetran. Modules in scope:
+Keystone Industries runs SAP S/4HANA on-premise. The Fivetran connector
+installs its ABAP transport into the customer's SAP system (delivered in
+the `/FIVETRAN/` namespace) and replicates from there. Modules in scope:
 
 - **FI** — Financial Accounting (BKPF, BSEG, SKAT, SKB1)
 - **CO** — Controlling (limited — cost centers and profit centers only)
@@ -40,10 +44,10 @@ Fivetran. Modules in scope:
 In the Fivetran dashboard:
 
 ```
-Connector type:        SAP ERP (SLT)
+Connector type:        SAP ERP on HANA  (NetWeaver path)
 Source group:          Keystone-S4HANA-DEV
 Destination schemas:   bronze_sap_fi, bronze_sap_sd, bronze_sap_mm, bronze_sap_mat
-Sync frequency:        15 minutes (CDC)
+Sync frequency:        15 minutes (CDC via Fivetran triggers)
 Table selection:       BKPF, BSEG, SKAT, SKB1,
                        VBAK, VBAP, VBRK, VBRP, KNA1,
                        EKKO, EKPO, RSEG, LFA1,
@@ -52,6 +56,10 @@ Column hashing:        none (demo system, no PII)
 Historical sync:       full re-sync on first run, then CDC
 ```
 
+Prerequisites in the SAP system: Fivetran NetWeaver API transport
+installed, RFC user with SELECT and TRIGGER privileges on the source
+schemas, plus the `/FIVETRAN/` namespace authorization.
+
 ## Demo environment access
 
 The live SAP S/4HANA demo system that backs this Fivetran connector
@@ -59,7 +67,7 @@ lives in the Fivetran SE Slab. Look up the page titled
 **"SAP S/4HANA Demo System"** for:
 
 - Hostname / system ID / client number
-- SLT replication server credentials
+- NetWeaver RFC user credentials
 - The list of currently-active schemas (occasionally rotated)
 - Snowflake / S3 destination credentials matched to this source
 

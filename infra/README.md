@@ -39,7 +39,7 @@ Paste `fivetran_role_arn` into the Fivetran SAP destination. Use
 
 - Snowflake. ODI's whole point is the lake itself; Snowflake (or BigQuery)
   is an optional engine, not a path through the architecture.
-- Any SAP-managed analytical product. The Fivetran SLT path lands raw
+- Any SAP-managed analytical product. The Fivetran NetWeaver path lands raw
   SAP tables here and does not require SAP BW, Datasphere, or the SAP
   Datasphere catalog.
 - ODP RFC interfaces. By design — see the policy brief at `/policy`.

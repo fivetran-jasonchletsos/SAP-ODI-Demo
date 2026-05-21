@@ -40,7 +40,7 @@ npm run dev    # http://localhost:5173
    │  FI · CO · SD · MM · PP modules                            │
    └────────────────────────────┬───────────────────────────────┘
                                 │  Fivetran SAP connector
-                                │  (SLT-based, NOT ODP RFC)
+                                │  (NetWeaver + Fivetran triggers, NOT ODP RFC)
                                 ▼
    ┌────────────────────────────────────────────────────────────┐
    │  AWS S3 — Apache Iceberg tables in 3 schemas               │
@@ -74,7 +74,7 @@ npm run dev    # http://localhost:5173
 
 | Path | What lives there |
 |---|---|
-| `connectors/` | Fivetran SAP connector configuration (managed connector, not SDK). README documents SLT vs ODP RFC paths and the July 2026 deadline. |
+| `connectors/` | Fivetran SAP connector configuration (managed connector, not SDK). README documents NetWeaver vs ODP RFC paths and the July 2026 deadline. |
 | `infra/` | Terraform — S3 lake, Glue catalog, IAM roles, Athena workgroup |
 | `transform/` | dbt project `sap_odi` — bronze sources, silver, gold + semantic layer. Decodes SAP cryptic names (BKPF.BUKRS → company_code) so every downstream consumer reads business English. |
 | `keystone-app/frontend/` | React + Vite + Tailwind v4 SPA |
@@ -112,7 +112,7 @@ npm run dev    # http://localhost:5173
 | Materials / Inventory | `MARA`, `MARC`, `MBEW` | Material master, plant view, valuation, turns |
 
 All synthetic in this repo. The Fivetran SAP connector (managed) is the
-production path. See `connectors/README.md` for the SLT path we recommend
+production path. See `connectors/README.md` for the NetWeaver-triggers path we recommend
 and why it sidesteps the ODP RFC deprecation.
 
 ## AWS deployment
@@ -128,7 +128,7 @@ terraform apply
 ## Demo environment
 
 The live SAP source for this demo lives in the Fivetran SE Slab. Find the
-"SAP S/4HANA Demo System" page for hostname, client, SLT credentials, and
+"SAP S/4HANA Demo System" page for hostname, client, NetWeaver RFC credentials, and
 the schema list. The Slab page is the source of truth for connection
 details and is NOT mirrored here for security reasons. Until that is wired,
 the synthetic snapshot under `keystone-app/frontend/public/data/` covers

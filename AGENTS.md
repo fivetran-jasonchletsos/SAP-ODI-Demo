@@ -21,7 +21,7 @@ If a screen does not answer one of those four, cut it or relabel it.
 
 | Dir | What |
 |---|---|
-| `connectors/` | Fivetran SAP connector docs. Managed connector — no SDK code. Documents SLT vs ODP RFC paths and the July 2026 deprecation. |
+| `connectors/` | Fivetran SAP connector docs. Managed connector — no SDK code. Documents NetWeaver vs ODP RFC paths and the July 2026 deprecation. |
 | `infra/` | Terraform — S3 lake bucket, Glue catalog DBs, IAM (Fivetran + dbt), Athena workgroup. |
 | `transform/` | dbt project `sap_odi` on Athena/Iceberg. Layers: `models/bronze` (sources only — raw SAP names), `models/silver` (stg = business-named columns), `models/gold` (facts/dims/marts + semantic layer in `metrics/`). |
 | `keystone-app/frontend/` | React + Vite + Tailwind v4 SPA. **Off-limits to backend agents.** |
@@ -30,7 +30,7 @@ If a screen does not answer one of those four, cut it or relabel it.
 ## Demo environment (Slab)
 
 Live SAP connection details are in the Fivetran SE Slab under the page
-**"SAP S/4HANA Demo System"**. Look up hostname, client, SLT credentials,
+**"SAP S/4HANA Demo System"**. Look up hostname, client, NetWeaver RFC credentials,
 and active schemas there. Do not commit credentials.
 
 If the Slab page is unreachable, the committed synthetic snapshot under

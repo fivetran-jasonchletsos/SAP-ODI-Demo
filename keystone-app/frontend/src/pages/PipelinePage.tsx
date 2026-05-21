@@ -11,7 +11,7 @@ export function PipelinePage() {
       <PageHeader
         eyebrow="Pipeline"
         title="Connector and layer status"
-        sub="Fivetran SAP via SLT, four dbt layers, snapshot publication to the frontend. The failure simulator below shows what would and would not break under common incidents — including the July 2026 ODP RFC blocking."
+        sub="Fivetran SAP ERP on HANA via NetWeaver and Fivetran-managed triggers (no ODP RFC dependency), four dbt layers, snapshot publication to the frontend. The failure simulator below shows what would and would not break under common incidents — including the July 2026 ODP RFC blocking."
       />
 
       <Card title="Source connector">

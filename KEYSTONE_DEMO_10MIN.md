@@ -49,7 +49,7 @@ Click into `/architecture`.
 
 - **Engines tab** — click through Athena, DuckDB, Trino, Spark, Claude.
   "Same Iceberg parquet. Different engines. The customer picks."
-- **Iceberg tables table** — "16 SAP tables landed in S3 by Fivetran SLT.
+- **Iceberg tables table** — "16 SAP tables landed in S3 by Fivetran's NetWeaver + triggers path.
   Glue knows about them. Any AWS-native tool can query them tomorrow."
 - **BW vs ODI comparison** — read row 3 aloud: "AI access — SAP BW
   requires their controlled pathway. ODI is direct parquet read."
@@ -77,7 +77,7 @@ four — Cohan's "menu" approach: ask before you show.
 
 **For a CIO / architect audience:** `/pipeline`
 > "Failure simulator. The top entry is the ODP RFC deprecation in
-> July — green because Keystone is on SLT, not RFC. The architecture
+> July — green because Keystone is on the NetWeaver + Fivetran-triggers path, not ODP RFC. The architecture
 > choice from a year ago made the policy a non-event."
 
 ## Closing (60s)
