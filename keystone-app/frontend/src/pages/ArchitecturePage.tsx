@@ -10,6 +10,28 @@ export function ArchitecturePage() {
 
   return (
     <div className="space-y-6">
+      <section className="rounded-lg border border-amber-400/40 bg-amber-400/5 p-6">
+        <div className="text-xs uppercase tracking-[0.18em] text-amber-300/80 mb-2">The ODI Story</div>
+        <h2 className="text-2xl md:text-3xl font-semibold text-slate-50">
+          Data infrastructure for agents you trust.
+        </h2>
+        <p className="mt-3 text-sm text-slate-300 leading-relaxed max-w-3xl">
+          <em>"MDS was optimized for humans. ODI is designed for a future with humans and
+          production agents at scale."</em> This demo is one instance of that architecture:
+          Fivetran's 750+ connectors and Managed Data Lake Service (MDLS) land data into open
+          table formats; dbt transformations build the governed semantic layer; multiple compute
+          engines and AI agents read the same gold tables.
+        </p>
+        <a
+          href="https://fivetran-jasonchletsos.github.io/Fivetran-Demo-Repository/story/"
+          target="_blank"
+          rel="noreferrer"
+          className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-amber-200 hover:text-amber-100"
+        >
+          Read the full ODI Story →
+        </a>
+      </section>
+
       <PageHeader
         eyebrow="ODI Architecture"
         title="The architecture that makes the SAP API policy a non-event"
