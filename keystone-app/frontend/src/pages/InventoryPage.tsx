@@ -49,9 +49,9 @@ export function InventoryPage() {
 
       <Card title="Slow movers">
         <div className="overflow-auto">
-          <table className="min-w-full text-sm">
+          <table className="data-table min-w-full text-sm">
             <thead>
-              <tr className="text-left text-xs uppercase tracking-wider text-slate-400 border-b border-slate-800">
+              <tr className="text-left">
                 <th className="py-2 pr-4">Material</th>
                 <th className="py-2 pr-4">Group</th>
                 <th className="py-2 pr-4">Plant</th>
@@ -61,10 +61,10 @@ export function InventoryPage() {
                 <th className="py-2 text-right">Turns</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800">
+            <tbody>
               {data?.slow_movers.map(r => (
                 <tr key={`${r.material_id}-${r.plant_id}`} className="text-slate-200">
-                  <td className="py-2 pr-4 font-mono text-xs">{r.material_id}</td>
+                  <td className="py-2 pr-4 text-xs text-violet-300" style={{ fontFamily: 'var(--font-mono)' }}>{r.material_id}</td>
                   <td className="py-2 pr-4">{r.material_group}</td>
                   <td className="py-2 pr-4">{r.plant_name}</td>
                   <td className="py-2 pr-4 text-right tabular-nums">{r.on_hand_quantity.toLocaleString()}</td>

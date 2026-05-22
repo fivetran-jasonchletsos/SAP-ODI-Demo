@@ -161,6 +161,7 @@ export interface IcebergData {
 export interface PipelineData {
   connector_status: {
     name: string
+    fivetran_id: string
     state: string
     last_sync_at: string
     sync_frequency_min: number

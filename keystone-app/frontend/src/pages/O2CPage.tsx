@@ -51,25 +51,25 @@ export function O2CPage() {
 
       <Card title="Top customers by revenue">
         <div className="overflow-auto">
-          <table className="min-w-full text-sm">
+          <table className="data-table min-w-full text-sm">
             <thead>
-              <tr className="text-left text-xs uppercase tracking-wider text-slate-400 border-b border-slate-800">
+              <tr className="text-left">
                 <th className="py-2 pr-4">Customer</th>
                 <th className="py-2 pr-4 text-right">Orders</th>
                 <th className="py-2 pr-4 text-right">Revenue (closed)</th>
                 <th className="py-2 text-right">Open value</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800">
+            <tbody>
               {data?.customer_ranking.slice(0, 20).map(c => (
                 <tr key={c.customer_id} className="text-slate-200">
                   <td className="py-2 pr-4">
                     <div>{c.customer_name}</div>
-                    <div className="text-xs text-slate-500 font-mono">{c.customer_id}</div>
+                    <div className="text-xs text-slate-500" style={{ fontFamily: 'var(--font-mono)' }}>{c.customer_id}</div>
                   </td>
-                  <td className="py-2 pr-4 text-right tabular-nums">{c.order_count}</td>
-                  <td className="py-2 pr-4 text-right tabular-nums">{fmt.money(c.revenue)}</td>
-                  <td className="py-2 text-right tabular-nums text-slate-400">{fmt.money(c.open_value)}</td>
+                  <td className="py-2 pr-4 text-right tabular-nums" style={{ fontFamily: 'var(--font-mono)' }}>{c.order_count}</td>
+                  <td className="py-2 pr-4 text-right tabular-nums" style={{ fontFamily: 'var(--font-mono)' }}>{fmt.money(c.revenue)}</td>
+                  <td className="py-2 text-right tabular-nums text-slate-400" style={{ fontFamily: 'var(--font-mono)' }}>{fmt.money(c.open_value)}</td>
                 </tr>
               ))}
             </tbody>

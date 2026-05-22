@@ -20,7 +20,7 @@ export function ArchitecturePage() {
           production agents at scale."</em> This demo is one instance of that architecture:
           Fivetran's 750+ connectors and Managed Data Lake Service (MDLS) land data into open
           table formats; dbt transformations build the governed semantic layer; multiple compute
-          engines and AI agents read the same gold tables.
+          engines and AI agents read the same gold mart tables.
         </p>
         <a
           href="https://fivetran-jasonchletsos.github.io/Fivetran-Demo-Repository/story/"
@@ -71,9 +71,9 @@ export function ArchitecturePage() {
       <section id="infra">
         <Card title="Iceberg tables in S3 (Glue-cataloged)">
           <div className="overflow-auto">
-            <table className="min-w-full text-sm">
+            <table className="data-table min-w-full text-sm">
               <thead>
-                <tr className="text-left text-xs uppercase tracking-wider text-slate-400 border-b border-slate-800">
+                <tr className="text-left">
                   <th className="py-2 pr-4">Schema</th>
                   <th className="py-2 pr-4">Table</th>
                   <th className="py-2 pr-4 text-right">Rows</th>
@@ -82,7 +82,7 @@ export function ArchitecturePage() {
                   <th className="py-2">Storage</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800">
+              <tbody>
                 {data?.tables.map(t => (
                   <tr key={`${t.schema}.${t.table}`} className="text-slate-200">
                     <td className="py-2 pr-4 text-xs text-slate-400 font-mono">{t.schema}</td>
@@ -100,15 +100,15 @@ export function ArchitecturePage() {
       </section>
 
       <Card title="SAP BW / Datasphere vs Open Data Infrastructure">
-        <table className="min-w-full text-sm">
+        <table className="data-table min-w-full text-sm">
           <thead>
-            <tr className="text-left text-xs uppercase tracking-wider text-slate-400 border-b border-slate-800">
+            <tr className="text-left">
               <th className="py-2 pr-4"></th>
               <th className="py-2 pr-4">SAP BW / Datasphere</th>
               <th className="py-2">ODI (this demo)</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800">
+          <tbody>
             {data?.mds_vs_odi.map(r => (
               <tr key={r.dimension} className="text-slate-200">
                 <td className="py-2 pr-4 font-semibold text-slate-300">{r.dimension}</td>

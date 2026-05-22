@@ -2,9 +2,12 @@ import { useSnapshot } from '../api/snapshot'
 import type { PipelineData } from '../types'
 import { Card, PageHeader } from '../components/PageHeader'
 
+const FIVETRAN_BASE = 'https://fivetran.com/dashboard/connectors'
+
 export function PipelinePage() {
   const d = useSnapshot<PipelineData>('pipeline.json')
   const data = d.data
+  const connectorId = data?.connector_status.fivetran_id
 
   return (
     <div className="space-y-6">
@@ -15,27 +18,80 @@ export function PipelinePage() {
       />
 
       <Card title="Source connector">
-        <div className="grid md:grid-cols-4 gap-4 text-sm">
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
           <Stat label="Source"          value={data?.connector_status.name ?? '—'} />
           <Stat label="State"           value={data?.connector_status.state ?? '—'} highlight />
           <Stat label="Last sync"       value={data?.connector_status.last_sync_at ?? '—'} />
           <Stat label="Tables"          value={`${data?.connector_status.tables_replicated ?? 0} · every ${data?.connector_status.sync_frequency_min ?? 0} min`} />
+        </div>
+
+        {/* Fivetran connector ID + deep link */}
+        <div
+          className="flex flex-wrap items-center gap-3 pt-3"
+          style={{ borderTop: '1px solid var(--border-soft)' }}
+        >
+          <div className="flex items-center gap-2">
+            <span
+              className="text-xs text-slate-500 uppercase"
+              style={{ fontFamily: 'var(--font-mono)', letterSpacing: '0.08em' }}
+            >
+              Fivetran connector ID
+            </span>
+            <code
+              className="text-xs px-2 py-0.5 rounded"
+              style={{
+                fontFamily: 'var(--font-mono)',
+                background: 'var(--surface-2)',
+                color: '#a78bfa',
+                border: '1px solid var(--border-soft)',
+              }}
+            >
+              {connectorId ?? '—'}
+            </code>
+          </div>
+
+          {connectorId && (
+            <a
+              href={`${FIVETRAN_BASE}/${connectorId}`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-medium rounded px-3 py-1.5 transition-colors"
+              style={{
+                background: 'var(--accent-muted)',
+                color: 'var(--accent)',
+                border: '1px solid rgba(251,191,36,0.25)',
+                fontFamily: 'var(--font-mono)',
+              }}
+            >
+              Open in Fivetran
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M6 3H3a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-3M10 2h4m0 0v4m0-4L6 10" />
+              </svg>
+            </a>
+          )}
         </div>
       </Card>
 
       <Card title="Layer status">
         <ul className="space-y-2">
           {data?.layer_status.map(l => (
-            <li key={l.layer} className="flex items-center justify-between border border-slate-800 rounded-md px-4 py-2">
+            <li key={l.layer} className="flex items-center justify-between rounded px-4 py-2.5"
+                style={{ border: '1px solid var(--border-soft)', background: 'var(--surface-2)' }}>
               <div>
-                <div className="text-slate-100 font-mono">{l.layer}</div>
-                <div className="text-xs text-slate-500">Last run: {l.last_run}</div>
+                <div className="text-slate-100 text-sm" style={{ fontFamily: 'var(--font-mono)' }}>{l.layer}</div>
+                <div className="text-xs text-slate-500 mt-0.5">Last run: {l.last_run}</div>
               </div>
               <div className="text-right">
-                <div className={`text-xs uppercase ${l.state === 'healthy' ? 'text-emerald-300' : 'text-amber-300'}`}>
+                <div className={`text-xs uppercase font-medium ${l.state === 'healthy' ? 'text-emerald-400' : 'text-amber-400'}`}
+                     style={{ fontFamily: 'var(--font-mono)', letterSpacing: '0.06em' }}>
                   {l.state}
                 </div>
-                {l.rows !== null && <div className="text-sm tabular-nums text-slate-300">{l.rows.toLocaleString()} rows</div>}
+                {l.rows !== null && (
+                  <div className="text-sm tabular-nums text-slate-300 mt-0.5"
+                       style={{ fontFamily: 'var(--font-mono)' }}>
+                    {l.rows.toLocaleString()} rows
+                  </div>
+                )}
               </div>
             </li>
           ))}
@@ -46,18 +102,26 @@ export function PipelinePage() {
         <div className="space-y-3">
           {data?.failure_sim.map(f => (
             <div key={f.id}
-                 className={`border rounded-md p-4 ${
-                   f.would_impact ? 'border-amber-500/40 bg-amber-500/5' : 'border-emerald-500/30 bg-emerald-500/5'
-                 }`}>
-              <div className="flex items-center justify-between mb-1">
-                <div className="font-medium text-slate-100">{f.title}</div>
-                <span className={`text-xs uppercase tracking-wider px-2 py-0.5 rounded ${
-                  f.would_impact ? 'text-amber-300 bg-amber-500/15' : 'text-emerald-300 bg-emerald-500/15'
-                }`}>
+                 className="rounded p-4"
+                 style={{
+                   border: `1px solid ${f.would_impact ? 'rgba(245,158,11,0.30)' : 'rgba(52,211,153,0.20)'}`,
+                   background: f.would_impact ? 'rgba(245,158,11,0.04)' : 'rgba(52,211,153,0.04)',
+                 }}>
+              <div className="flex items-center justify-between mb-1.5">
+                <div className="text-sm font-medium text-slate-100">{f.title}</div>
+                <span
+                  className="text-xs font-medium px-2 py-0.5 rounded"
+                  style={{
+                    fontFamily: 'var(--font-mono)',
+                    color: f.would_impact ? '#fbbf24' : '#34d399',
+                    background: f.would_impact ? 'rgba(251,191,36,0.10)' : 'rgba(52,211,153,0.10)',
+                    letterSpacing: '0.06em',
+                  }}
+                >
                   {f.would_impact ? 'Would impact' : 'No impact'}
                 </span>
               </div>
-              <p className="text-sm text-slate-300">{f.narrative}</p>
+              <p className="text-sm text-slate-400">{f.narrative}</p>
             </div>
           ))}
         </div>
@@ -69,8 +133,14 @@ export function PipelinePage() {
 function Stat({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
     <div>
-      <div className="text-xs uppercase tracking-wider text-slate-500">{label}</div>
-      <div className={`mt-1 ${highlight ? 'text-emerald-300 font-semibold uppercase' : 'text-slate-100'}`}>
+      <div
+        className="text-xs uppercase text-slate-500 mb-0.5"
+        style={{ fontFamily: 'var(--font-mono)', letterSpacing: '0.09em' }}
+      >
+        {label}
+      </div>
+      <div className={`text-sm ${highlight ? 'font-semibold uppercase' : 'text-slate-200'}`}
+           style={{ color: highlight ? '#34d399' : undefined, fontFamily: highlight ? 'var(--font-mono)' : undefined }}>
         {value}
       </div>
     </div>

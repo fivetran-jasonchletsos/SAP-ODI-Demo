@@ -9,7 +9,7 @@
   {
     "risk": "Cloud inflexibility",
     "claim": "Restricted to vendor-certified services rather than the full native cloud catalog.",
-    "answer": "Native S3 + Glue + Athena. Terraform under infra/ provisions exactly the AWS primitives Keystone already runs.",
+    "answer": "Native S3 + Glue + Athena. Terraform under infra/ provisions exactly the AWS primitives Meridian already runs.",
     "link": "/architecture",
     "link_label": "Open Iceberg in your own S3"
   },

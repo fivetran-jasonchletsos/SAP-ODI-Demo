@@ -10,22 +10,48 @@ export function HomePage() {
 
   return (
     <div className="space-y-8">
-      <section className="border border-amber-500/20 bg-amber-500/5 rounded-lg p-6">
-        <div className="text-xs uppercase tracking-wider text-amber-300 mb-2">
-          Why Keystone built this
+      <section
+        className="rounded-md p-6 md:p-8"
+        style={{
+          border: '1px solid rgba(251,191,36,0.18)',
+          background: 'linear-gradient(135deg, rgba(251,191,36,0.04) 0%, rgba(3,7,18,0) 60%)',
+        }}
+      >
+        <div
+          className="text-xs uppercase tracking-widest mb-2 font-medium"
+          style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)', letterSpacing: '0.12em' }}
+        >
+          Why Meridian built this
         </div>
-        <h1 className="text-3xl md:text-4xl font-semibold text-slate-50 leading-tight">
+        <h1
+          className="text-2xl sm:text-3xl md:text-[2.2rem] font-semibold text-slate-50 leading-tight max-w-3xl"
+          style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.02em' }}
+        >
           When the vendor of record restricts AI access to your own data,
           the only safe place for your AI strategy is your own lakehouse.
         </h1>
-        <p className="text-slate-300 mt-4 max-w-3xl leading-relaxed">
+        <p className="text-slate-300 mt-4 max-w-3xl leading-relaxed text-sm">
           {summary.data?.policy_excerpt ?? 'Loading...'}
         </p>
-        <div className="flex flex-wrap gap-3 mt-5">
-          <Link to="/policy" className="px-4 py-2 rounded-md bg-amber-400/90 text-slate-950 font-medium hover:bg-amber-300 transition">
+        <div className="flex flex-wrap gap-3 mt-6">
+          <Link
+            to="/policy"
+            className="px-4 py-2 rounded text-sm font-semibold transition-colors"
+            style={{
+              background: 'var(--accent)',
+              color: '#030712',
+            }}
+          >
             Read the policy brief
           </Link>
-          <Link to="/architecture" className="px-4 py-2 rounded-md border border-slate-700 text-slate-200 hover:border-slate-500 transition">
+          <Link
+            to="/architecture"
+            className="px-4 py-2 rounded text-sm font-medium transition-colors"
+            style={{
+              border: '1px solid var(--border-strong)',
+              color: '#cbd5e1',
+            }}
+          >
             See the ODI architecture
           </Link>
         </div>

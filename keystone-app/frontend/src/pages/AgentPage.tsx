@@ -79,14 +79,14 @@ export function AgentPage() {
 function simulatedAnswer(q: string): string {
   const lower = q.toLowerCase()
   if (lower.includes('dso') || lower.includes('receivable'))
-    return 'Top DSO offenders pulled from mart_dso: customers with the highest AR / monthly revenue ratio surface on /o2c. Run: SELECT customer_id, AVG(dso_days) FROM gold.mart_dso GROUP BY 1 ORDER BY 2 DESC LIMIT 10;'
+    return 'Top DSO offenders pulled from mart_dso: customers with the highest AR / monthly revenue ratio surface on /o2c. Run: SELECT customer_id, AVG(dso_days) FROM mart_dso GROUP BY 1 ORDER BY 2 DESC LIMIT 10;'
   if (lower.includes('three-way') || lower.includes('three way') || lower.includes('vendor'))
-    return 'Vendors below 90% three-way match are surfaced on /p2p. Source: mart_supplier_scorecard. Grades A-D reflect closed PO lines / total PO lines. No SAP RFC call needed.'
+    return 'Vendors below 90% three-way match are surfaced on /p2p. Source: mart_supplier_scorecard. Grades A–D reflect closed PO lines / total PO lines. No SAP RFC call needed.'
   if (lower.includes('slow') || lower.includes('inventory'))
     return 'Slow movers come from mart_inventory_turns: materials where (TTM invoice value / inventory value at standard) < 1.0. See /inventory for the ranked list and value-at-risk.'
   if (lower.includes('trial') || lower.includes('balance'))
-    return 'Trial balance on /finance is computed in mart_trial_balance: BSEG line items joined to BKPF headers, summed by GL account with debit/credit class. KS01 in Q1 is the default view.'
+    return 'Trial balance on /finance is computed in mart_trial_balance: BSEG line items joined to BKPF headers, summed by GL account with debit/credit class. Current fiscal quarter is the default view.'
   if (lower.includes('open') && lower.includes('order'))
-    return 'Open sales orders are flagged in fct_sales_orders by comparing order qty to billed qty per line. /o2c shows the funnel and blocked-order list.'
+    return 'Open sales orders are flagged in mart_sales_orders by comparing order qty to billed qty per line. /o2c shows the funnel and blocked-order list.'
   return 'This question would route to the gold layer in Iceberg via Athena (or any engine you point at the lake). The agent does not call SAP — it reads parquet, governed by Glue, summarized by the dbt models in transform/models/gold/.'
 }

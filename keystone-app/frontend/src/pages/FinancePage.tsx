@@ -73,9 +73,9 @@ export function FinancePage() {
 
       <Card title="Trial balance">
         <div className="overflow-auto">
-          <table className="min-w-full text-sm">
+          <table className="data-table min-w-full text-sm">
             <thead>
-              <tr className="text-left text-xs uppercase tracking-wider text-slate-400 border-b border-slate-800">
+              <tr className="text-left">
                 <th className="py-2 pr-4">GL account</th>
                 <th className="py-2 pr-4">Description</th>
                 <th className="py-2 pr-4">Class</th>
@@ -84,17 +84,17 @@ export function FinancePage() {
                 <th className="py-2 text-right">Net</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800">
+            <tbody>
               {fin.data?.trial_balance.map(r => (
                 <tr key={r.gl_account} className="text-slate-200">
-                  <td className="py-2 pr-4 font-mono text-xs">{r.gl_account}</td>
+                  <td className="py-2 pr-4 text-xs text-violet-300" style={{ fontFamily: 'var(--font-mono)' }}>{r.gl_account}</td>
                   <td className="py-2 pr-4">{r.gl_account_description}</td>
                   <td className="py-2 pr-4">
-                    <span className="text-xs uppercase tracking-wide text-slate-400">{r.account_class}</span>
+                    <span className="text-xs uppercase text-slate-500" style={{ fontFamily: 'var(--font-mono)', letterSpacing: '0.06em' }}>{r.account_class}</span>
                   </td>
-                  <td className="py-2 pr-4 text-right tabular-nums">{fmt.money(r.debit_total)}</td>
-                  <td className="py-2 pr-4 text-right tabular-nums">{fmt.money(r.credit_total)}</td>
-                  <td className="py-2 text-right tabular-nums">{fmt.money(r.net_balance)}</td>
+                  <td className="py-2 pr-4 text-right tabular-nums" style={{ fontFamily: 'var(--font-mono)' }}>{fmt.money(r.debit_total)}</td>
+                  <td className="py-2 pr-4 text-right tabular-nums" style={{ fontFamily: 'var(--font-mono)' }}>{fmt.money(r.credit_total)}</td>
+                  <td className="py-2 text-right tabular-nums" style={{ fontFamily: 'var(--font-mono)' }}>{fmt.money(r.net_balance)}</td>
                 </tr>
               ))}
             </tbody>
@@ -102,7 +102,7 @@ export function FinancePage() {
         </div>
         <Caption>
           Source: <code className="bg-slate-900 px-1 py-0.5 rounded text-amber-200">mart_trial_balance.sql</code>.
-          Sums signed posting amounts by GL account from <code className="bg-slate-900 px-1 py-0.5 rounded text-amber-200">fct_gl_journal</code>.
+          Sums signed posting amounts by GL account from <code className="bg-slate-900 px-1 py-0.5 rounded text-amber-200">mart_gl_journal</code>.
         </Caption>
       </Card>
 

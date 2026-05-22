@@ -42,9 +42,9 @@ export function P2PPage() {
 
       <Card title="Supplier scorecard">
         <div className="overflow-auto">
-          <table className="min-w-full text-sm">
+          <table className="data-table min-w-full text-sm">
             <thead>
-              <tr className="text-left text-xs uppercase tracking-wider text-slate-400 border-b border-slate-800">
+              <tr className="text-left">
                 <th className="py-2 pr-4">Vendor</th>
                 <th className="py-2 pr-4 text-right">PO lines</th>
                 <th className="py-2 pr-4 text-right">PO value</th>
@@ -53,16 +53,16 @@ export function P2PPage() {
                 <th className="py-2 text-center">Grade</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800">
+            <tbody>
               {data?.supplier_scorecard.map(s => (
                 <tr key={s.vendor_id} className="text-slate-200">
                   <td className="py-2 pr-4">
                     <div>{s.vendor_name}</div>
-                    <div className="text-xs text-slate-500 font-mono">{s.vendor_id}</div>
+                    <div className="text-xs text-slate-500" style={{ fontFamily: 'var(--font-mono)' }}>{s.vendor_id}</div>
                   </td>
-                  <td className="py-2 pr-4 text-right tabular-nums">{s.po_line_count}</td>
-                  <td className="py-2 pr-4 text-right tabular-nums">{fmt.money(s.total_po_value)}</td>
-                  <td className="py-2 pr-4 text-right tabular-nums">{fmt.money(s.total_invoiced)}</td>
+                  <td className="py-2 pr-4 text-right tabular-nums" style={{ fontFamily: 'var(--font-mono)' }}>{s.po_line_count}</td>
+                  <td className="py-2 pr-4 text-right tabular-nums" style={{ fontFamily: 'var(--font-mono)' }}>{fmt.money(s.total_po_value)}</td>
+                  <td className="py-2 pr-4 text-right tabular-nums" style={{ fontFamily: 'var(--font-mono)' }}>{fmt.money(s.total_invoiced)}</td>
                   <td className="py-2 pr-4 text-right tabular-nums">
                     <BulletCell pct={s.three_way_match_pct} target={THREE_WAY_TARGET_PCT} />
                   </td>

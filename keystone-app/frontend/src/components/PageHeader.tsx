@@ -1,19 +1,40 @@
 export function PageHeader({ eyebrow, title, sub }: { eyebrow?: string; title: string; sub?: string }) {
   return (
     <div className="mb-6">
-      {eyebrow && <div className="text-xs uppercase tracking-wider text-amber-300 mb-1">{eyebrow}</div>}
-      <h1 className="text-2xl font-semibold text-slate-50">{title}</h1>
-      {sub && <p className="text-slate-400 mt-2 max-w-3xl leading-relaxed">{sub}</p>}
+      {eyebrow && (
+        <div
+          className="text-xs uppercase tracking-widest mb-1.5 font-medium"
+          style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)', letterSpacing: '0.12em' }}
+        >
+          {eyebrow}
+        </div>
+      )}
+      <h1
+        className="text-2xl font-semibold text-slate-50 leading-tight"
+        style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.01em' }}
+      >
+        {title}
+      </h1>
+      {sub && (
+        <p className="text-slate-400 mt-2 max-w-3xl leading-relaxed text-sm">{sub}</p>
+      )}
     </div>
   )
 }
 
 export function Card({ title, children, right }: { title?: string; children: React.ReactNode; right?: React.ReactNode }) {
   return (
-    <div className="border border-slate-800 bg-slate-900/30 rounded-lg p-5">
+    <div className="card rounded-md p-5">
       {(title || right) && (
-        <div className="flex items-center justify-between mb-3">
-          {title && <h2 className="text-sm font-semibold text-slate-200 uppercase tracking-wider">{title}</h2>}
+        <div className="flex items-center justify-between mb-4">
+          {title && (
+            <h2
+              className="text-xs font-semibold uppercase text-slate-400"
+              style={{ fontFamily: 'var(--font-mono)', letterSpacing: '0.10em' }}
+            >
+              {title}
+            </h2>
+          )}
           {right}
         </div>
       )}
