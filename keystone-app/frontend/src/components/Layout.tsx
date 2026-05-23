@@ -43,7 +43,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className="font-semibold tracking-tight text-base"
               style={{ fontFamily: 'var(--font-display)', color: 'var(--accent)', letterSpacing: '-0.01em' }}
             >
-              Meridian
+              Pendulum Industries
             </span>
             <span className="hidden sm:inline text-slate-500 text-xs font-light tracking-wide">
               SAP · Open Data Infrastructure
@@ -140,7 +140,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-wrap gap-4 justify-between"
              style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: '#475569' }}>
           <div>
-            Meridian Industries is a fictional global manufacturer.
+            Pendulum Industries is a fictional global manufacturer.
             Data is synthetic unless the demo is wired to a live SAP source via Fivetran.
           </div>
           <div>

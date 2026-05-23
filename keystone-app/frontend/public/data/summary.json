@@ -1,7 +1,7 @@
 {
   "today": "2026-05-20",
   "last_sync_at": "2026-05-20T14:22:00Z",
-  "policy_excerpt": "SAP will begin blocking the ODP RFC interface in July 2026 and has introduced policy language that explicitly restricts AI agent access to SAP data via APIs. Meridian's pipeline runs Fivetran's SAP ERP on HANA connector \u2014 NetWeaver RFC plus Fivetran-managed triggers, not the restricted ODP RFC surface \u2014 landing Iceberg into our own S3 so any engine, or any AI agent, can query the gold mart layer. We are not on the policy clock.",
+  "policy_excerpt": "SAP will begin blocking the ODP RFC interface in July 2026 and has introduced policy language that explicitly restricts AI agent access to SAP data via APIs. Pendulum Industries' pipeline runs Fivetran's SAP ERP on HANA connector \u2014 NetWeaver RFC plus Fivetran-managed triggers, not the restricted ODP RFC surface \u2014 landing Iceberg into our own S3 so any engine, or any AI agent, can query the gold mart layer. We are not on the policy clock.",
   "kpis": [
     {
       "label": "Gross Revenue (TTM)",

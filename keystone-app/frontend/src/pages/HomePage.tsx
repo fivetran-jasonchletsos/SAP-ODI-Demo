@@ -21,7 +21,7 @@ export function HomePage() {
           className="text-xs uppercase tracking-widest mb-2 font-medium"
           style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)', letterSpacing: '0.12em' }}
         >
-          Why Meridian built this
+          Why Pendulum Industries built this
         </div>
         <h1
           className="text-2xl sm:text-3xl md:text-[2.2rem] font-semibold text-slate-50 leading-tight max-w-3xl"
