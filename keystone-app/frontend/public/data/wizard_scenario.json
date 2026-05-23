@@ -1,0 +1,46 @@
+{
+  "company": "Pendulum Industries",
+  "request_id": "BLD-2026-05-23-0001",
+  "requested_by": "Selin Kaya, CFO",
+  "requested_at": "2026-05-23T08:14:00+01:00",
+  "timezone_label": "Friday 08:14 CET",
+  "question": "Why did days-payable-outstanding extend 9 days for tier-2 suppliers in the EMEA business unit last quarter while NA held?",
+  "metric_label": "DPO by supplier tier and business unit, quarterly",
+  "metric_code": "gold.fct_dpo_by_supplier_tier_bu_quarter",
+  "sop_meeting_at": "2026-05-24T06:00:00+01:00",
+  "sop_meeting_label": "Saturday 06:00 CET · Audit Committee",
+  "target_schema": "gold",
+  "target_model": "fct_dpo_by_supplier_tier_bu_quarter",
+  "target_grain": "one row per (supplier_tier, business_unit, fiscal_quarter)",
+  "prior_crisis_id": "INC-2026-04-30-0018",
+  "business_unit": "EMEA",
+  "supplier_tier": "tier-2",
+  "upstream_models": [
+    {
+      "model": "gold.fct_invoices",
+      "layer": "gold",
+      "grain": "invoice_id",
+      "description": "AP invoices from SAP BSEG and BKPF via Fivetran CDC. Includes invoice_date, due_date, payment_date, amount_eur, company_code, and routing_status."
+    },
+    {
+      "model": "gold.fct_purchase_orders",
+      "layer": "gold",
+      "grain": "po_id",
+      "description": "Purchase orders from SAP EKKO and EKPO. Includes vendor_id, po_date, goods_receipt_date, business_unit, and payment_terms."
+    },
+    {
+      "model": "silver.stg_sap__lfa1",
+      "layer": "gold",
+      "grain": "vendor_id",
+      "description": "Vendor master from SAP LFA1. Carries supplier_tier classification (tier-1, tier-2, tier-3), country, and payment_group assignments used to segment the DPO calculation."
+    },
+    {
+      "model": "silver.stg_sap__bkpf",
+      "layer": "gold",
+      "grain": "document_id",
+      "description": "FI document header from SAP BKPF. Includes company_code, fiscal_period, fiscal_year, and posting_date — the anchors for the quarterly DPO roll-up."
+    }
+  ],
+  "manual_time_days": "3 to 5 days",
+  "build_room_seconds": 90
+}

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useSnapshot } from '../api/snapshot'
 import type { PipelineData } from '../types'
 import { Card, PageHeader } from '../components/PageHeader'
@@ -97,6 +98,51 @@ export function PipelinePage() {
           ))}
         </ul>
       </Card>
+
+      {/* dbt-wizard callout — links to live demo */}
+      <div
+        className="rounded p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+        style={{
+          border: '1px solid rgba(245,158,11,0.22)',
+          background: 'linear-gradient(135deg, rgba(245,158,11,0.05) 0%, rgba(3,7,18,0) 60%)',
+        }}
+      >
+        <div>
+          <div
+            className="text-xs uppercase tracking-widest mb-2 font-medium"
+            style={{ fontFamily: 'var(--font-mono)', color: '#f59e0b', letterSpacing: '0.12em' }}
+          >
+            dbt-wizard · on-demand gold models
+          </div>
+          <div
+            className="text-base font-semibold text-slate-50 mb-1"
+            style={{ fontFamily: 'var(--font-display)' }}
+          >
+            When a CFO question has no gold model to answer it
+          </div>
+          <p className="text-sm text-slate-400 max-w-xl">
+            Four sub-agents surface the upstreams, author the SQL, write the tests, and
+            materialize a new Iceberg gold table in 90 seconds — against the same Snowflake
+            account this pipeline feeds. Watch it live on the DPO scenario.
+          </p>
+        </div>
+        <div className="flex flex-col gap-2 shrink-0">
+          <Link
+            to="/dbt-wizard/scenario"
+            className="px-4 py-2 rounded text-sm font-semibold transition-colors whitespace-nowrap text-center"
+            style={{ background: '#f59e0b', color: '#030712' }}
+          >
+            See the DPO scenario
+          </Link>
+          <Link
+            to="/dbt-wizard/live"
+            className="px-4 py-2 rounded text-sm font-medium transition-colors whitespace-nowrap text-center"
+            style={{ border: '1px solid rgba(245,158,11,0.30)', color: '#f59e0b' }}
+          >
+            Jump to Live Build
+          </Link>
+        </div>
+      </div>
 
       <Card title="Failure simulator">
         <div className="space-y-3">

@@ -80,6 +80,54 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* dbt-wizard demo CTA */}
+      <section
+        className="rounded-md p-6"
+        style={{
+          border: '1px solid rgba(245,158,11,0.22)',
+          background: 'linear-gradient(135deg, rgba(245,158,11,0.06) 0%, rgba(3,7,18,0) 60%)',
+        }}
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div
+              className="text-xs uppercase tracking-widest mb-2 font-medium"
+              style={{ fontFamily: 'var(--font-mono)', color: '#f59e0b', letterSpacing: '0.12em' }}
+            >
+              dbt-wizard · live demo
+            </div>
+            <h2
+              className="text-xl sm:text-2xl font-semibold text-slate-50 leading-tight max-w-2xl"
+              style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.01em' }}
+            >
+              CFO asks why EMEA DPO extended 9 days. No gold model exists.
+              Audit Committee meets in 22 hours.
+            </h2>
+            <p className="text-slate-400 mt-2 text-sm">
+              dbt-wizard surfaces the upstreams, authors the SQL, writes the tests, and
+              materializes the Iceberg table in 90 seconds.
+              $18M working-capital exposure. Root cause: config rollback, not a hiring decision.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2 shrink-0">
+            <Link
+              to="/dbt-wizard/scenario"
+              className="px-5 py-2.5 rounded text-sm font-semibold transition-colors whitespace-nowrap text-center"
+              style={{ background: '#f59e0b', color: '#030712' }}
+            >
+              See the scenario
+            </Link>
+            <Link
+              to="/dbt-wizard/live"
+              className="px-5 py-2.5 rounded text-sm font-medium transition-colors whitespace-nowrap text-center"
+              style={{ border: '1px solid rgba(245,158,11,0.30)', color: '#f59e0b' }}
+            >
+              Jump to Live Build
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="text-xs text-slate-500">
         Last sync: {summary.data?.last_sync_at ?? '—'} · As-of date: {summary.data?.today ?? '—'}
       </section>

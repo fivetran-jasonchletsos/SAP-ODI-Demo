@@ -11,6 +11,7 @@ const NAV = [
   { to: '/architecture', label: 'ODI Architecture' },
   { to: '/agent',       label: 'AI Agent' },
   { to: '/pipeline',    label: 'Pipeline' },
+  { to: '/dbt-wizard',  label: 'dbt-wizard' },
 ]
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -137,14 +138,30 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </main>
 
       <footer style={{ borderTop: '1px solid var(--border-soft)' }} className="mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-wrap gap-4 justify-between"
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-wrap gap-4 justify-between items-center"
              style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: '#475569' }}>
           <div>
             Pendulum Industries is a fictional global manufacturer.
             Data is synthetic unless the demo is wired to a live SAP source via Fivetran.
           </div>
-          <div>
-            Driver: Taylor Brown, <em>SAP's latest API policy raises the stakes for your AI strategy</em>, April 29, 2026.
+          <div className="flex items-center gap-4 flex-wrap">
+            <div>
+              Driver: Taylor Brown, <em>SAP's latest API policy raises the stakes for your AI strategy</em>, April 29, 2026.
+            </div>
+            <a
+              href={`${import.meta.env.BASE_URL?.replace(/\/$/, '')}/Pendulum-Industries-3min-Demo-Runbook.pdf`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 6,
+                padding: '4px 10px', borderRadius: 3, fontWeight: 700, fontSize: '0.68rem',
+                background: 'rgba(245,158,11,0.10)', color: '#f59e0b',
+                border: '1px solid rgba(245,158,11,0.30)', textDecoration: 'none',
+                letterSpacing: '0.06em', textTransform: 'uppercase',
+              }}
+            >
+              3-min runbook PDF
+            </a>
           </div>
         </div>
       </footer>

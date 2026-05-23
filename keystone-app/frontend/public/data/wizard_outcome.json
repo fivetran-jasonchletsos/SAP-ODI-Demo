@@ -1,0 +1,104 @@
+{
+  "materialized_model": "gold.fct_dpo_by_supplier_tier_bu_quarter",
+  "row_count": 312,
+  "tests_passed": 8,
+  "tests_written": "6 column-level + 1 combination + 1 not-null on avg_dpo_days",
+  "build_seconds": 90,
+  "before": {
+    "nodes": [
+      { "id": "fct_invoices",     "name": "gold.fct_invoices",          "layer": "gold" },
+      { "id": "fct_po",           "name": "gold.fct_purchase_orders",   "layer": "gold" },
+      { "id": "stg_lfa1",         "name": "silver.stg_sap__lfa1",       "layer": "gold" },
+      { "id": "stg_bkpf",         "name": "silver.stg_sap__bkpf",       "layer": "gold" },
+      { "id": "gap",              "name": "gold.fct_dpo_by_supplier_tier_bu_quarter", "layer": "gap", "built": false }
+    ],
+    "edges": [
+      { "from": "fct_invoices", "to": "gap" },
+      { "from": "fct_po",       "to": "gap" },
+      { "from": "stg_lfa1",     "to": "gap" },
+      { "from": "stg_bkpf",     "to": "gap" }
+    ]
+  },
+  "after": {
+    "nodes": [
+      { "id": "fct_invoices",  "name": "gold.fct_invoices",          "layer": "gold" },
+      { "id": "fct_po",        "name": "gold.fct_purchase_orders",   "layer": "gold" },
+      { "id": "stg_lfa1",      "name": "silver.stg_sap__lfa1",       "layer": "gold" },
+      { "id": "stg_bkpf",      "name": "silver.stg_sap__bkpf",       "layer": "gold" },
+      { "id": "new_gold",      "name": "gold.fct_dpo_by_supplier_tier_bu_quarter", "layer": "gold", "built": true, "new": true },
+      { "id": "ap_dash",       "name": "AP Aging Dashboard",         "layer": "consumer" },
+      { "id": "supplier_risk", "name": "Supplier Risk Scorecard",    "layer": "consumer" }
+    ],
+    "edges": [
+      { "from": "fct_invoices", "to": "new_gold" },
+      { "from": "fct_po",       "to": "new_gold" },
+      { "from": "stg_lfa1",     "to": "new_gold" },
+      { "from": "stg_bkpf",     "to": "new_gold" },
+      { "from": "new_gold",     "to": "ap_dash" },
+      { "from": "new_gold",     "to": "supplier_risk" }
+    ]
+  },
+  "root_cause": {
+    "headline": "Invoice-routing config pushed three weeks ago flags EUR 5K-plus invoices for an extra approval stop in EMEA only",
+    "detail": "68% of EMEA tier-2 invoices over EUR 5,000 carry routing_status = 'pending_approval' versus 12% in NA for the same period. The bottleneck is the routing rule — a configuration change, not an AP staffing issue. Rolling back the config restores DPO parity without a hiring decision. The rule was introduced in the EMEA AP config push of 2026-05-02 and applies only to company codes in the EMEA cluster.",
+    "affected_cohort": "EMEA tier-2 suppliers · invoices over EUR 5,000 · Q1 2026",
+    "fallout_count": 214,
+    "total_reviewed": 312
+  },
+  "without_wizard": {
+    "label": "Without dbt-wizard",
+    "summary": "Question enters the analytics backlog. Audit Committee meets without the answer.",
+    "metrics": [
+      { "label": "Time to model",         "value": "3 to 5 days" },
+      { "label": "Engineer hours",         "value": "8 to 14h" },
+      { "label": "Tests written",          "value": "ad-hoc" },
+      { "label": "Lineage entries",        "value": "manual" },
+      { "label": "Documentation",          "value": "PR-time only" },
+      { "label": "Audit Committee status", "value": "no answer" }
+    ],
+    "narrative": [
+      "CFO files the request. It enters the analytics backlog at priority A.",
+      "Data engineer scopes the work Monday morning — four days after the committee.",
+      "Engineer writes DPO SQL from scratch, joining four gold and silver models by hand.",
+      "Tests, YAML, and contract get bolted on at PR time. Sometimes.",
+      "Finance team cannot isolate root cause before the audit committee meeting.",
+      "Working-capital exposure of $18M remains unresolved through the weekend."
+    ]
+  },
+  "with_wizard": {
+    "label": "With dbt-wizard",
+    "summary": "Four sub-agents surface the upstreams, author the SQL, write the tests, and materialize the asset in 90 seconds.",
+    "metrics": [
+      { "label": "Time to model",         "value": "90 seconds" },
+      { "label": "Engineer hours",         "value": "0.0h authored" },
+      { "label": "Tests written",          "value": "6 column + 1 combination + 1 not-null" },
+      { "label": "Lineage entries",        "value": "auto, 4 upstream" },
+      { "label": "Documentation",          "value": "in YAML on materialize" },
+      { "label": "Audit Committee status", "value": "root cause in hand" }
+    ],
+    "narrative": [
+      "Explorer runs status and search. Returns the four upstream candidates.",
+      "Summary runs describe and lineage. Confirms join path and names the new grain.",
+      "Worker runs dbt_show on a Q1 2026 EMEA tier-2 slice. Validates the proposed grain.",
+      "Worker authors fct_dpo_by_supplier_tier_bu_quarter.sql with CTEs and final SELECT.",
+      "Verification writes the YAML — description, schema contract, 8 tests, ownership.",
+      "Worker materializes the table to Iceberg. Verification confirms downstream lineage.",
+      "CFO presents root-cause finding to Audit Committee 22 hours ahead of schedule."
+    ]
+  },
+  "governance": [
+    { "label": "Tests written",          "value": "6 column-level + 1 combination + 1 not-null" },
+    { "label": "Schema contract",        "value": "enforced on materialize" },
+    { "label": "Lineage upstreams",      "value": "4 declared, 4 validated" },
+    { "label": "Documentation",          "value": "auto-written in YAML" },
+    { "label": "Ownership",             "value": "finance_analytics" },
+    { "label": "Tag",                    "value": "ai_built · finance" },
+    { "label": "Iceberg table format",   "value": "v2 · Parquet · ZSTD" },
+    { "label": "Open Catalog registration", "value": "complete" }
+  ],
+  "hero": {
+    "label": "Root cause identified 22 hours before the Audit Committee meets",
+    "value": "90 seconds",
+    "note": "From CFO question to materialized Iceberg gold table — versioned, tested, documented, lineage-tracked. The EMEA finance team now knows the invoice-routing config push is the bottleneck. The fix is a config rollback, not a hiring decision. $18M working-capital impact and supplier-risk exposure resolved before the weekend."
+  }
+}

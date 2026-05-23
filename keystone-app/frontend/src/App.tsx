@@ -9,6 +9,10 @@ import { InventoryPage } from './pages/InventoryPage'
 import { ArchitecturePage } from './pages/ArchitecturePage'
 import { AgentPage } from './pages/AgentPage'
 import { PipelinePage } from './pages/PipelinePage'
+import { DbtWizardPage } from './pages/DbtWizardPage'
+import { DpoScenarioPage } from './pages/DpoScenarioPage'
+import { WizardLivePage } from './pages/WizardLivePage'
+import { DpoOutcomePage } from './pages/DpoOutcomePage'
 import { NotFoundPage } from './pages/NotFoundPage'
 
 export default function App() {
@@ -24,6 +28,10 @@ export default function App() {
         <Route path="/architecture" element={<ArchitecturePage />} />
         <Route path="/agent" element={<AgentPage />} />
         <Route path="/pipeline" element={<PipelinePage />} />
+        <Route path="/dbt-wizard" element={<DbtWizardPage />} />
+        <Route path="/dbt-wizard/scenario" element={<DpoScenarioPage />} />
+        <Route path="/dbt-wizard/live" element={<WizardLivePage />} />
+        <Route path="/dbt-wizard/outcome" element={<DpoOutcomePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Layout>
