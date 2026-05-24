@@ -11,7 +11,9 @@ const NAV = [
   { to: '/architecture', label: 'ODI Architecture' },
   { to: '/agent',       label: 'AI Agent' },
   { to: '/pipeline',    label: 'Pipeline' },
-  { to: '/dbt-wizard',  label: 'dbt-wizard' },
+  { to: '/dbt-wizard/scenario', label: 'Scenario' },
+  { to: '/dbt-wizard/live',     label: 'Live' },
+  { to: '/dbt-wizard/outcome',  label: 'Outcome' },
 ]
 
 export function Layout({ children }: { children: React.ReactNode }) {
