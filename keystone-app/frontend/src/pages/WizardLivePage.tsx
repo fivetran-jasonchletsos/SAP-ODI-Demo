@@ -372,9 +372,9 @@ export function WizardLivePage() {
 
         {/* LEFT: Sub-agent narration */}
         <section
+          className="lg:!h-[calc(100dvh-440px)]"
           style={{
-            height: 'calc(100dvh - 440px)', minHeight: 300,
-            background: 'var(--t-surface)', border: '1px solid var(--t-line)', borderRadius: '0.25rem',
+            minHeight: 'max(60vh, 300px)', background: 'var(--t-surface)', border: '1px solid var(--t-line)', borderRadius: '0.25rem',
             display: 'flex', flexDirection: 'column',
           }}
         >
@@ -471,7 +471,7 @@ export function WizardLivePage() {
         </section>
 
         {/* RIGHT: Live code panels */}
-        <section className="flex flex-col gap-3" style={{ height: 'calc(100dvh - 440px)', minHeight: 300 }}>
+        <section className="flex flex-col gap-3 lg:!h-[calc(100dvh-440px)]" style={{ minHeight: 'max(60vh, 300px)' }}>
 
           {/* SQL panel */}
           <div
