@@ -1,20 +1,153 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
-const NAV = [
-  { to: '/',            label: 'Overview' },
-  { to: '/policy',      label: 'Why this exists' },
-  { to: '/finance',     label: 'Finance' },
-  { to: '/o2c',         label: 'Order-to-Cash' },
-  { to: '/p2p',         label: 'Procure-to-Pay' },
-  { to: '/inventory',   label: 'Inventory' },
-  { to: '/architecture', label: 'ODI Architecture' },
-  { to: '/agent',       label: 'AI Agent' },
-  { to: '/pipeline',    label: 'Pipeline' },
-  { to: '/dbt-wizard/scenario', label: 'Scenario' },
-  { to: '/dbt-wizard/live',     label: 'Live' },
-  { to: '/dbt-wizard/outcome',  label: 'Outcome' },
+// Canonical nav pattern matching Clarity / Verity / Altavest / FinServ.
+// 7 top-level entries (4 flat links + 3 grouped dropdowns) collapses from
+// the previous flat 12-item list. dbt-Wizard and ODI become dropdowns so
+// they stop visually dominating the bar.
+type NavEntry =
+  | { kind: 'link'; to: string; label: string }
+  | { kind: 'group'; label: string; matchPrefixes: string[]; children: { to: string; label: string }[] }
+
+const NAV: NavEntry[] = [
+  { kind: 'link', to: '/',        label: 'Home' },
+  { kind: 'link', to: '/policy',  label: 'Why this exists' },
+  { kind: 'link', to: '/finance', label: 'Finance' },
+  {
+    kind: 'group',
+    label: 'Operations',
+    matchPrefixes: ['/o2c', '/p2p', '/inventory'],
+    children: [
+      { to: '/o2c',       label: 'Order-to-Cash' },
+      { to: '/p2p',       label: 'Procure-to-Pay' },
+      { to: '/inventory', label: 'Inventory' },
+    ],
+  },
+  { kind: 'link', to: '/agent',   label: 'AI Agent' },
+  {
+    kind: 'group',
+    label: 'dbt-Wizard',
+    matchPrefixes: ['/dbt-wizard'],
+    children: [
+      { to: '/dbt-wizard/scenario', label: 'Scenario' },
+      { to: '/dbt-wizard/live',     label: 'Live build' },
+      { to: '/dbt-wizard/outcome',  label: 'Outcome' },
+    ],
+  },
+  {
+    kind: 'group',
+    label: 'ODI',
+    matchPrefixes: ['/architecture', '/pipeline'],
+    children: [
+      { to: '/architecture', label: 'Architecture' },
+      { to: '/pipeline',     label: 'Pipeline' },
+    ],
+  },
 ]
+
+// Flatten NAV for the mobile drawer — keep group labels as section dividers.
+type FlatItem =
+  | { kind: 'item'; to: string; label: string }
+  | { kind: 'section'; label: string }
+
+function flattenForMobile(): FlatItem[] {
+  const out: FlatItem[] = []
+  for (const entry of NAV) {
+    if (entry.kind === 'link') {
+      out.push({ kind: 'item', to: entry.to, label: entry.label })
+    } else {
+      out.push({ kind: 'section', label: entry.label })
+      for (const c of entry.children) out.push({ kind: 'item', to: c.to, label: c.label })
+    }
+  }
+  return out
+}
+
+function NavEntryEl({ entry, pathname }: { entry: NavEntry; pathname: string }) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+    const onDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false) }
+    document.addEventListener('mousedown', onDown)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('mousedown', onDown)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [open])
+
+  useEffect(() => { setOpen(false) }, [pathname])
+
+  if (entry.kind === 'link') {
+    return (
+      <NavLink
+        to={entry.to}
+        end={entry.to === '/'}
+        className={({ isActive }) =>
+          `px-2.5 py-1.5 rounded transition-colors text-xs font-medium whitespace-nowrap ${
+            isActive ? 'text-amber-300' : 'text-slate-500 hover:text-slate-200'
+          }`
+        }
+        style={({ isActive }) => isActive ? { background: 'var(--accent-muted)' } : {}}
+      >
+        {entry.label}
+      </NavLink>
+    )
+  }
+
+  const isActive = entry.matchPrefixes.some((p) => pathname === p || pathname.startsWith(p + '/'))
+  return (
+    <span ref={ref} className="relative inline-block">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        className={`px-2.5 py-1.5 rounded transition-colors text-xs font-medium whitespace-nowrap inline-flex items-center gap-1 ${
+          isActive ? 'text-amber-300' : 'text-slate-500 hover:text-slate-200'
+        }`}
+        style={isActive ? { background: 'var(--accent-muted)' } : {}}
+      >
+        {entry.label}
+        <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden className={`transition-transform ${open ? 'rotate-180' : ''}`}>
+          <path d="M2 4 L5 7 L8 4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+      {open && (
+        <span
+          role="menu"
+          className="absolute left-0 top-full mt-1 min-w-[180px] rounded-md overflow-hidden z-50"
+          style={{
+            background: 'var(--surface-0)',
+            border: '1px solid var(--border-medium)',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.45)',
+          }}
+        >
+          {entry.children.map((c) => (
+            <NavLink
+              key={c.to}
+              to={c.to}
+              end={c.to === '/'}
+              className={({ isActive: ia }) =>
+                `block px-3.5 py-2 text-xs font-medium transition-colors ${
+                  ia ? 'text-amber-300' : 'text-slate-400 hover:text-slate-100'
+                }`
+              }
+              style={({ isActive: ia }) => ia ? { background: 'var(--accent-muted)' } : {}}
+            >
+              {c.label}
+            </NavLink>
+          ))}
+        </span>
+      )}
+    </span>
+  )
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -29,6 +162,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       return () => { document.body.style.overflow = prev }
     }
   }, [mobileOpen])
+
+  const mobileItems = flattenForMobile()
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--surface-0)' }}>
@@ -55,22 +190,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-0.5 ml-auto text-sm">
-            {NAV.map(n => (
-              <NavLink
-                key={n.to}
-                to={n.to}
-                end={n.to === '/'}
-                className={({ isActive }) =>
-                  `px-2.5 py-1.5 rounded transition-colors text-xs font-medium ${
-                    isActive
-                      ? 'text-amber-300'
-                      : 'text-slate-500 hover:text-slate-200'
-                  }`
-                }
-                style={({ isActive }) => isActive ? { background: 'var(--accent-muted)' } : {}}
-              >
-                {n.label}
-              </NavLink>
+            {NAV.map((entry) => (
+              <NavEntryEl
+                key={entry.kind === 'link' ? entry.to : entry.label}
+                entry={entry}
+                pathname={location.pathname}
+              />
             ))}
           </nav>
 
@@ -111,21 +236,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
               style={{ borderTop: '1px solid var(--border-soft)', background: 'var(--surface-0)' }}
             >
               <ul className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-col">
-                {NAV.map(n => (
-                  <li key={n.to}>
+                {mobileItems.map((m, i) => m.kind === 'section' ? (
+                  <li key={`section-${m.label}-${i}`} className="px-3 pt-3 pb-1 text-[10px] uppercase tracking-[0.18em] text-slate-500 font-semibold">
+                    {m.label}
+                  </li>
+                ) : (
+                  <li key={m.to}>
                     <NavLink
-                      to={n.to}
-                      end={n.to === '/'}
+                      to={m.to}
+                      end={m.to === '/'}
                       onClick={() => setMobileOpen(false)}
                       className={({ isActive }) =>
-                        `block px-3 py-3 text-sm rounded transition-colors ${
-                          isActive
-                            ? 'text-amber-300'
-                            : 'text-slate-400 hover:text-slate-100'
+                        `block px-3 py-2.5 text-sm rounded transition-colors ${
+                          isActive ? 'text-amber-300' : 'text-slate-400 hover:text-slate-100'
                         }`
                       }
                     >
-                      {n.label}
+                      {m.label}
                     </NavLink>
                   </li>
                 ))}
