@@ -62,7 +62,13 @@ export function DpoScenarioPage() {
   const [tMinus, setTMinus] = useState('T-22:00:00');
 
   useEffect(() => {
-    fetch(wizardDataUrl('wizard_scenario.json')).then(r => r.json()).then(setS);
+    fetch(wizardDataUrl('wizard_scenario.json'))
+      .then(r => {
+        if (!r.ok) throw new Error(`Failed to load wizard_scenario.json: ${r.status}`);
+        return r.json();
+      })
+      .then(setS)
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
